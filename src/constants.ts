@@ -1,0 +1,1 @@
+export const BATCH_SIZE_TO_PROCESS = 10000;
