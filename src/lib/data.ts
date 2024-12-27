@@ -36,3 +36,13 @@ export const processBatch = async (
         await sleep(1000);
     }
 };
+
+// here we clean null values as they cant be merged when running the merge cyphers
+export const cleanNullValuesFromRow = (
+    row: Record<string, any>
+): Record<string, number> => {
+    // Remove properties that are null or undefined
+    return Object.fromEntries(
+        Object.entries(row).filter(([_, v]) => v !== null) // keep only if v != null
+    );
+};
