@@ -22,6 +22,8 @@ import { createRelationshipQuery } from './queries/createRelationship';
 import path from 'path';
 import { artistGenderQuery } from './queries/artistGender';
 import { artworkDimensionQuery } from './queries/artworkDimension';
+import { setupDbIndices } from './modules/setupDbIndices';
+import { logBigMessage } from './utils/console';
 
 // BIG FILES
 const artistsCsvPath = path.join(__dirname, 'data', 'Artists.csv');
@@ -42,23 +44,25 @@ async function main() {
     const password = process.env.DB_PWD as string;
     const conn = new Neo4jConnection(uri, user, password);
 
-    console.log('Connecting to Neo4j');
+    logBigMessage('Connecting to Neo4j');
+
+    await setupDbIndices(conn);
 
     try {
         // ---------------------------------------------------------
         // Step 1: Load "Artists.csv" and Create/Update Artist nodes
         // ---------------------------------------------------------
-        console.log('Creating Artist nodes...');
+        logBigMessage('Creating Artist nodes...');
         await loadCsvAndIngestData(
             artistsCsvPath,
             createArtistQuery, // e.g. MERGE (a:Artist {ConstituentID: $artist.ConstituentID}) ...
             conn,
             artistParameterMapping.coreProperties // maps row to { artist: {...} }
         );
-        console.log('Artist nodes created successfully.');
+        logBigMessage('Artist nodes created successfully.');
 
         // Link Artists to Nationality
-        console.log('Linking Artist -> Nationality...');
+        logBigMessage('Linking Artist -> Nationality...');
         await loadCsvAndIngestData(
             artistsCsvPath,
             artistNationalityQuery, // e.g. MATCH (a:Artist {ConstituentID: $artistID}) MERGE (n:Nationality {name: $nationality}) ...
@@ -67,7 +71,7 @@ async function main() {
         );
 
         // Link Artists to Gender
-        console.log('Linking Artist -> Gender...');
+        logBigMessage('Linking Artist -> Gender...');
         await loadCsvAndIngestData(
             artistsCsvPath,
             artistGenderQuery, // e.g. MATCH (a:Artist {ConstituentID: $artistID}) MERGE (g:Gender {label: $gender}) ...
@@ -76,7 +80,7 @@ async function main() {
         );
 
         // Link Artists to References (WikiQID, ULAN)
-        console.log('Linking Artist -> References...');
+        logBigMessage('Linking Artist -> References...');
         // This might require a custom ingestion approach if your references query
         // uses FOREACH or has multiple merges in a single statement. But conceptually:
         await loadCsvAndIngestData(
@@ -86,22 +90,22 @@ async function main() {
             artistParameterMapping.references
         );
 
-        console.log('Artist relationships created successfully.');
+        logBigMessage('Artist relationships created successfully.');
 
         // ---------------------------------------------------------
         // Step 2: Load "Artworks.csv" and Create/Update Artwork nodes
         // ---------------------------------------------------------
-        console.log('Creating Artwork nodes...');
+        logBigMessage('Creating Artwork nodes...');
         await loadCsvAndIngestData(
             artworksCsvPath,
             createArtworkQuery, // e.g. MERGE (aw:Artwork {ObjectID: $artwork.ObjectID}) ...
             conn,
             artworkParameterMapping.coreProperties // maps row to { artwork: {...} }
         );
-        console.log('Artwork nodes created successfully.');
+        logBigMessage('Artwork nodes created successfully.');
 
         // Link Artwork to Classification
-        console.log('Linking Artwork -> Classification...');
+        logBigMessage('Linking Artwork -> Classification...');
         await loadCsvAndIngestData(
             artworksCsvPath,
             artworkClassificationQuery, // e.g. MATCH (aw:Artwork {ObjectID: $objectID}) MERGE (c:Classification {name: $classification}) ...
@@ -110,7 +114,7 @@ async function main() {
         );
 
         // Link Artwork to Department
-        console.log('Linking Artwork -> Department...');
+        logBigMessage('Linking Artwork -> Department...');
         await loadCsvAndIngestData(
             artworksCsvPath,
             artworkDepartmentQuery, // e.g. MATCH (aw:Artwork {ObjectID: $objectID}) MERGE (d:Department {name: $department}) ...
@@ -119,7 +123,7 @@ async function main() {
         );
 
         // Link Artwork to Medium
-        console.log('Linking Artwork -> Medium...');
+        logBigMessage('Linking Artwork -> Medium...');
         await loadCsvAndIngestData(
             artworksCsvPath,
             artworkMediumQuery, // e.g. MATCH (aw:Artwork {ObjectID: $objectID}) MERGE (m:Medium {name: $medium}) ...
@@ -128,7 +132,7 @@ async function main() {
         );
 
         // Link Artwork to Dimension
-        console.log('Linking Artwork -> Dimension...');
+        logBigMessage('Linking Artwork -> Dimension...');
         await loadCsvAndIngestData(
             artworksCsvPath,
             artworkDimensionQuery, // e.g. MATCH (aw:Artwork {ObjectID: $objectID}) MERGE (dim:Dimension { ... })
@@ -137,7 +141,7 @@ async function main() {
         );
 
         // (Optional) Link Artwork "OnView" to a Location node
-        console.log('Linking Artwork -> OnView Location...');
+        logBigMessage('Linking Artwork -> OnView Location...');
         await loadCsvAndIngestData(
             artworksCsvPath,
             artworkOnViewQuery, // e.g. MATCH (aw:Artwork {ObjectID: $objectID}) MERGE (loc:Location {name: $onViewLocation}) ...
@@ -145,14 +149,14 @@ async function main() {
             artworkParameterMapping.onView // or a specialized function if you store OnView differently
         );
 
-        console.log('Artwork relationships created successfully.');
+        logBigMessage('Artwork relationships created successfully.');
 
         // --------------------------------------------------------------------
         // Step 3: Link Artists and Artworks (if the same CSV or separate file)
         // --------------------------------------------------------------------
         // For example, if "Artworks.csv" contains both "ConstituentID" and "ObjectID"
         // you can link them in one pass:
-        console.log('Linking (Artist)-[:CREATED]->(Artwork)...');
+        logBigMessage('Linking (Artist)-[:CREATED]->(Artwork)...');
         await loadCsvAndIngestData(
             artworksCsvPath,
             createRelationshipQuery,
@@ -160,7 +164,8 @@ async function main() {
             relationshipParameterMapping.createdRelationship // or a combined approach
         );
 
-        console.log('All relationships loaded successfully.');
+        logBigMessage('Data import completed successfully.');
+        logBigMessage('You can now run queries against your Neo4j database.');
     } finally {
         // Close the Neo4j connection
         conn.close();
