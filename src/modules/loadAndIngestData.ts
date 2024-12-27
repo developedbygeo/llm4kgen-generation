@@ -37,34 +37,35 @@ export async function loadCsvAndIngestData(
                         const session = conn.driver.session();
                         try {
                             await session.executeWrite(async (tx) => {
-                                for (const row of batch) {
-                                    // 1) If parameterMapping is a single function, just call it.
-                                    // 2) Otherwise, build the parameters object by calling each function in the mapping object.
-                                    let parameters: any;
-                                    if (
-                                        typeof parameterMapping === 'function'
-                                    ) {
-                                        parameters = parameterMapping(row);
-                                    } else {
-                                        parameters = Object.fromEntries(
-                                            Object.entries(
-                                                parameterMapping
-                                            ).map(([key, func]) => [
-                                                key,
-                                                func(row),
-                                            ])
+                                await Promise.all(
+                                    batch.map(async (row) => {
+                                        let parameters: any;
+                                        if (
+                                            typeof parameterMapping ===
+                                            'function'
+                                        ) {
+                                            parameters = parameterMapping(row);
+                                        } else {
+                                            parameters = Object.fromEntries(
+                                                Object.entries(
+                                                    parameterMapping
+                                                ).map(([key, func]) => [
+                                                    key,
+                                                    func(row),
+                                                ])
+                                            );
+                                        }
+                                        console.log(
+                                            'Final parameters:',
+                                            parameters
                                         );
-                                    }
-                                    console.log(
-                                        'Final parameters:',
-                                        parameters
-                                    );
-
-                                    // Only execute if we got a valid parameter object
-                                    if (parameters) {
-                                        await tx.run(query, parameters);
-                                    }
-                                }
+                                        if (parameters) {
+                                            await tx.run(query, {
+                                                rows: parameters,
+                                            });
+                                        }
+                                    })
+                                );
                             });
                         } finally {
                             await session.close();
