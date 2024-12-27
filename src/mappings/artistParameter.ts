@@ -1,13 +1,30 @@
 export const artistParameterMapping = {
-    ConstituentID: (row: Record<string, string>) => row['ConstituentID'],
-    DisplayName: (row: Record<string, string>) => row['DisplayName'],
-    ArtistBio: (row: Record<string, string>) => row['ArtistBio'],
-    Nationality: (row: Record<string, string>) => row['Nationality'],
-    Gender: (row: Record<string, string>) => row['Gender'],
-    BeginDate: (row: Record<string, string>) =>
-        row['BeginDate'] ? parseInt(row['BeginDate']) : null,
-    EndDate: (row: Record<string, string>) =>
-        row['EndDate'] ? parseInt(row['EndDate']) : null,
-    WikiQID: (row: Record<string, string>) => row['Wiki QID'],
-    ULAN: (row: Record<string, string>) => row['ULAN'],
+    // Core Artist properties that stay on the `Artist` node
+    coreProperties: (row: Record<string, string>) => ({
+        ConstituentID: row['ConstituentID'],
+        DisplayName: row['DisplayName'],
+        ArtistBio: row['ArtistBio'] ?? null,
+        BeginDate: row['BeginDate'] ? parseInt(row['BeginDate']) : null,
+        EndDate: row['EndDate'] ? parseInt(row['EndDate']) : null,
+    }),
+
+    // These are used to create separate nodes or relationships:
+    nationality: (row: Record<string, string>) => ({
+        artistID: row['ConstituentID'],
+        nationality: row['Nationality'] ?? null,
+    }),
+    gender: (row: Record<string, string>) => ({
+        artistID: row['ConstituentID'],
+        gender: row['Gender'] ?? null,
+    }),
+
+    // References (e.g., WikiData, ULAN)
+    // could be stored as properties or related reference nodes
+    references: (row: Record<string, string>) => ({
+        artistID: row['ConstituentID'],
+        references: {
+            WikiQID: row['Wiki QID'] ?? null,
+            ULAN: row['ULAN'] ?? null,
+        },
+    }),
 };

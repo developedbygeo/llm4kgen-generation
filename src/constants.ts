@@ -1,1 +1,1 @@
-export const BATCH_SIZE_TO_PROCESS = 10000;
+export const BATCH_SIZE_TO_PROCESS = 1000000;

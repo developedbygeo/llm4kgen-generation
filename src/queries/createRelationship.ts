@@ -1,5 +1,6 @@
 export const createRelationshipQuery = `
-MATCH (a:Artist {ConstituentID: $ConstituentID})
-MATCH (aw:Artwork {ObjectID: $ObjectID})
-MERGE (a)-[:CREATED]->(aw)
+UNWIND $rows AS row
+MATCH (a:Artist {ConstituentID: row.ConstituentID})
+MATCH (aw:Artwork {ObjectID: row.ObjectID})
+MERGE (a)-[:CREATED]->(aw);
 `;

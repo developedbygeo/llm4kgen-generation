@@ -1,43 +1,87 @@
+import { cleanNullValuesFromRow } from '../lib/data';
+
 export const artworkParameterMapping = {
-    ObjectID: (row: Record<string, string>) => row['ObjectID'],
-    Title: (row: Record<string, string>) => row['Title'],
-    ArtistBio: (row: Record<string, string>) => row['ArtistBio'],
-    Nationality: (row: Record<string, string>) => row['Nationality'],
-    BeginDate: (row: Record<string, string>) =>
-        row['BeginDate'] ? parseInt(row['BeginDate']) : null,
-    EndDate: (row: Record<string, string>) =>
-        row['EndDate'] ? parseInt(row['EndDate']) : null,
-    Gender: (row: Record<string, string>) => row['Gender'],
-    Date: (row: Record<string, string>) => row['Date'],
-    Medium: (row: Record<string, string>) => row['Medium'],
-    Dimensions: (row: Record<string, string>) => row['Dimensions'],
-    CreditLine: (row: Record<string, string>) => row['CreditLine'],
-    AccessionNumber: (row: Record<string, string>) => row['AccessionNumber'],
-    Classification: (row: Record<string, string>) => row['Classification'],
-    Department: (row: Record<string, string>) => row['Department'],
-    DateAcquired: (row: Record<string, string>) => row['DateAcquired'],
-    Cataloged: (row: Record<string, string>) => row['Cataloged'],
-    URL: (row: Record<string, string>) => row['URL'],
-    ImageURL: (row: Record<string, string>) => row['ImageURL'],
-    OnView: (row: Record<string, string>) => row['OnView'],
-    Circumference_cm: (row: Record<string, string>) =>
-        row['Circumference (cm)']
-            ? parseFloat(row['Circumference (cm)'])
-            : null,
-    Depth_cm: (row: Record<string, string>) =>
-        row['Depth (cm)'] ? parseFloat(row['Depth (cm)']) : null,
-    Diameter_cm: (row: Record<string, string>) =>
-        row['Diameter (cm)'] ? parseFloat(row['Diameter (cm)']) : null,
-    Height_cm: (row: Record<string, string>) =>
-        row['Height (cm)'] ? parseFloat(row['Height (cm)']) : null,
-    Length_cm: (row: Record<string, string>) =>
-        row['Length (cm)'] ? parseFloat(row['Length (cm)']) : null,
-    Weight_kg: (row: Record<string, string>) =>
-        row['Weight (kg)'] ? parseFloat(row['Weight (kg)']) : null,
-    Width_cm: (row: Record<string, string>) =>
-        row['Width (cm)'] ? parseFloat(row['Width (cm)']) : null,
-    SeatHeight_cm: (row: Record<string, string>) =>
-        row['Seat Height (cm)'] ? parseFloat(row['Seat Height (cm)']) : null,
-    Duration_sec: (row: Record<string, string>) =>
-        row['Duration (sec.)'] ? parseFloat(row['Duration (sec.)']) : null,
+    // Core Artwork properties -> used by createArtworkQuery
+    coreProperties: (row: Record<string, string>) => ({
+        artwork: {
+            ObjectID: row['ObjectID'],
+            Title: row['Title'] ?? null,
+            ArtistBio: row['ArtistBio'] ?? null,
+            Date: row['Date'] ?? null,
+            CreditLine: row['CreditLine'] ?? null,
+            AccessionNumber: row['AccessionNumber'] ?? null,
+            DateAcquired: row['DateAcquired'] ?? null,
+            Cataloged: row['Cataloged'] ?? null,
+            URL: row['URL'] ?? null,
+            ImageURL: row['ImageURL'] ?? null,
+            OnView: row['OnView'] ?? null,
+        },
+    }),
+
+    // Classification -> used by artworkClassificationQuery
+    classification: (row: Record<string, string>) => ({
+        objectID: row['ObjectID'],
+        classification: row['Classification'] ?? null,
+    }),
+
+    // Department -> used by artworkDepartmentQuery
+    department: (row: Record<string, string>) => ({
+        objectID: row['ObjectID'],
+        department: row['Department'] ?? null,
+    }),
+
+    // Medium -> used by artworkMediumQuery
+    medium: (row: Record<string, string>) => ({
+        objectID: row['ObjectID'],
+        medium: row['Medium'] ?? null,
+    }),
+
+    // Dimensions -> used by artworkDimensionQuery
+    dimensions: (row: Record<string, string>) => {
+        const unparsedObject = {
+            objectID: row['ObjectID'],
+            dim: {
+                circumference: row['Circumference (cm)']
+                    ? parseFloat(row['Circumference (cm)'])
+                    : null,
+                depth: row['Depth (cm)'] ? parseFloat(row['Depth (cm)']) : null,
+                diameter: row['Diameter (cm)']
+                    ? parseFloat(row['Diameter (cm)'])
+                    : null,
+                height: row['Height (cm)']
+                    ? parseFloat(row['Height (cm)'])
+                    : null,
+                length: row['Length (cm)']
+                    ? parseFloat(row['Length (cm)'])
+                    : null,
+                weight: row['Weight (kg)']
+                    ? parseFloat(row['Weight (kg)'])
+                    : null,
+                width: row['Width (cm)'] ? parseFloat(row['Width (cm)']) : null,
+                seatHeight: row['Seat Height (cm)']
+                    ? parseFloat(row['Seat Height (cm)'])
+                    : null,
+                durationSec: row['Duration (sec.)']
+                    ? parseFloat(row['Duration (sec.)'])
+                    : null,
+            },
+        };
+
+        const objectID = row['ObjectID'];
+        const dimensionKey = `${objectID}-dim`;
+        // console.log(unparsedDimensions);
+        const parsedDimensions = {
+            ...unparsedObject,
+            objectID, // For matching the Artwork node
+            dimensionKey, // For merging the Dimension node
+            dim: cleanNullValuesFromRow(unparsedObject.dim),
+        };
+        return parsedDimensions;
+    },
+
+    // OnView -> used by artworkOnViewQuery
+    onView: (row: Record<string, string>) => ({
+        objectID: row['ObjectID'],
+        onViewLocation: row['OnView'] ?? null,
+    }),
 };
