@@ -1,5 +1,6 @@
 export const artistNationalityQuery = `
-MATCH (a:Artist {ConstituentID: $artistID})
-MERGE (n:Nationality {name: $nationality})
+UNWIND $rows AS row
+MATCH (a:Artist {ConstituentID: row.artistID})
+MERGE (n:Nationality {name: row.nationality})
 MERGE (a)-[:HAS_NATIONALITY]->(n)
 `;

@@ -1,25 +1,26 @@
 export const createArtworkQuery = `
-MERGE (aw:Artwork {ObjectID: $artwork.ObjectID})
+UNWIND $rows AS row
+MERGE (aw:Artwork {ObjectID: row.artwork.ObjectID})
   ON CREATE SET
-    aw.Title = $artwork.Title,
-    aw.ArtistBio = $artwork.ArtistBio,
-    aw.Date = $artwork.Date,
-    aw.CreditLine = $artwork.CreditLine,
-    aw.AccessionNumber = $artwork.AccessionNumber,
-    aw.DateAcquired = $artwork.DateAcquired,
-    aw.Cataloged = $artwork.Cataloged,
-    aw.URL = $artwork.URL,
-    aw.ImageURL = $artwork.ImageURL,
-    aw.OnView = $artwork.OnView
+    aw.Title = row.artwork.Title,
+    aw.ArtistBio = row.artwork.ArtistBio,
+    aw.Date = row.artwork.Date,
+    aw.CreditLine = row.artwork.CreditLine,
+    aw.AccessionNumber = row.artwork.AccessionNumber,
+    aw.DateAcquired = row.artwork.DateAcquired,
+    aw.Cataloged = row.artwork.Cataloged,
+    aw.URL = row.artwork.URL,
+    aw.ImageURL = row.artwork.ImageURL,
+    aw.OnView = row.artwork.OnView
   ON MATCH SET
-    aw.Title = $artwork.Title,
-    aw.ArtistBio = $artwork.ArtistBio,
-    aw.Date = $artwork.Date,
-    aw.CreditLine = $artwork.CreditLine,
-    aw.AccessionNumber = $artwork.AccessionNumber,
-    aw.DateAcquired = $artwork.DateAcquired,
-    aw.Cataloged = $artwork.Cataloged,
-    aw.URL = $artwork.URL,
-    aw.ImageURL = $artwork.ImageURL,
-    aw.OnView = $artwork.OnView
+    aw.Title = row.artwork.Title,
+    aw.ArtistBio = row.artwork.ArtistBio,
+    aw.Date = row.artwork.Date,
+    aw.CreditLine = row.artwork.CreditLine,
+    aw.AccessionNumber = row.artwork.AccessionNumber,
+    aw.DateAcquired = row.artwork.DateAcquired,
+    aw.Cataloged = row.artwork.Cataloged,
+    aw.URL = row.artwork.URL,
+    aw.ImageURL = row.artwork.ImageURL,
+    aw.OnView = row.artwork.OnView
 `;

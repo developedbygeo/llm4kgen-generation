@@ -1,7 +1,8 @@
 export const artworkDimensionQuery = `
-MATCH (aw:Artwork {ObjectID: $objectID})
-MERGE (dim:Dimension { dimensionKey: $dimensionKey })
+UNWIND $rows AS row
+MATCH (aw:Artwork {ObjectID: row.objectID})
+MERGE (dim:Dimension { dimensionKey: row.dimensionKey })
   ON CREATE SET dim.createdAt = timestamp()
-SET dim += $dim
+SET dim += row.dim
 MERGE (aw)-[:HAS_DIMENSION]->(dim)
 `;
