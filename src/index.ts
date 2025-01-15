@@ -41,6 +41,11 @@ import { ingestDataScript } from './scripts/ingestData';
 import config from './config';
 import { createDbIndicesTool } from './agent/tools/createDbIndices';
 import { CreateDbIndexQueryItem } from './types/createDbIndices';
+import prompts from 'prompts';
+import {
+    RUNNABLE_SCRIPT_DESCRIPTION_ENUM,
+    RUNNABLE_SCRIPT_ENUM,
+} from './enums/scripts';
 
 // BIG FILES
 // const artistsCsvPath = path.join(__dirname, 'data', 'Artists.csv');
@@ -76,7 +81,43 @@ async function main() {
     logBigMessage('Connecting to Neo4j');
 
     /* MODULE 0 - CREATE DB INDICES */
-    await setupDbIndices(conn, files);
+    // await setupDbIndices(conn, files);
+
+    logBigMessage('Welcome to the LLM Data Ingestion Toolbox');
+    let exit = false;
+
+    while (!exit) {
+        const response = await prompts({
+            type: 'select',
+            name: 'script',
+            message: 'Which operation do you want to run?',
+            choices: [
+                {
+                    title: RUNNABLE_SCRIPT_ENUM.GENERATE_DB_INDICES,
+                    value: RUNNABLE_SCRIPT_ENUM.GENERATE_DB_INDICES,
+                    description:
+                        RUNNABLE_SCRIPT_DESCRIPTION_ENUM.GENERATE_DB_INDICES,
+                },
+                { title: 'Script Two', value: 'scriptTwo' },
+                { title: 'Exit', value: 'exit' },
+            ],
+        });
+
+        switch (response.script) {
+            case RUNNABLE_SCRIPT_ENUM.GENERATE_DB_INDICES:
+                await setupDbIndices(conn, files);
+                break;
+            case 'scriptTwo':
+                console.log('Running script two...');
+                break;
+            case 'exit':
+                exit = true;
+                console.log('Exiting program. Goodbye!');
+                break;
+            default:
+                console.log('No valid script chosen.');
+        }
+    }
 
     /* MODULE 1 - BATCH AND CREATE RELATIONSHIPS */
 

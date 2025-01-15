@@ -6,3 +6,6 @@ export const sanitizePropertiesFromParentheses = (prop: string) =>
 
 export const extractEntityFromFileName = (fileName: string) =>
     fileName.split('ParameterMapping.ts')[0].toUpperCase();
+
+export const sanitizeFileIdentifierFromString = (input: string): string =>
+    input.startsWith('files:') ? input.replace(/^files:\s*/, '') : input;
