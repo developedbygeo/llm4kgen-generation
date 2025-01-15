@@ -1,45 +1,50 @@
 import { mkdir, writeFile } from 'fs/promises';
 import path from 'path';
-import { sanitizePropertiesFromParentheses } from '../utils/string';
 
-export const writeMappingsToFiles = async (data: any, outputDir: string) => {
+export const writeMappingsToFiles = async (
+    data: Record<string, Record<string, any>>,
+    outputDir: string
+) => {
     try {
+        console.log('Starting writeMappingsToFiles...');
+        console.log('Output directory:', outputDir);
+
         // Ensure the output directory exists
         await mkdir(outputDir, { recursive: true });
 
-        // Process each entity and write its mappings to a file
-        for (const entity of data) {
-            const entityName = entity.entity; // For example, 'artist' or 'artwork'
+        // Process each entity (e.g., Artist, Artwork)
+        for (const [entityName, attributes] of Object.entries(data)) {
             const filePath = path.join(
                 outputDir,
-                `${entityName}ParameterMapping.js`
+                `${entityName}ParameterMapping.ts`
+            );
+            console.log(
+                `Processing entity: ${entityName}, writing to: ${filePath}`
             );
 
-            // Create the content for the JS file
             let fileContent = `export const ${entityName}ParameterMapping = {\n`;
 
-            // Add coreProperties if it exists
-            if (entity.coreProperties) {
-                fileContent += `    // Core ${entityName} properties\n`;
-                fileContent += `    coreProperties: ${entity.coreProperties},\n\n`;
+            // Process each attribute in the entity
+            for (const [attributeName, attributeDetails] of Object.entries(
+                attributes
+            )) {
+                fileContent += `    ${attributeName}: (row: Record<string, string | null>) => ({\n`;
+                fileContent += `        name: row['${attributeDetails.name}'] ?? null,\n`;
+                fileContent += `        entity: '${attributeDetails.entity}',\n`;
+                fileContent += `        relationship: '${attributeDetails.relationship}',\n`;
+                fileContent += `        value: row['${attributeDetails.value}'] ?? null,\n`;
+                fileContent += `    }),\n\n`;
             }
 
-            // Add attribute functions as methods of the exported object
-            for (const [key, value] of Object.entries(entity)) {
-                if (key !== 'entity' && key !== 'coreProperties') {
-                    const cleanedKey = sanitizePropertiesFromParentheses(key); // Clean the key name
-                    fileContent += `    // ${cleanedKey} -> used by ${entityName}${cleanedKey.replace(/ /g, '')}Query\n`;
-                    fileContent += `    ${cleanedKey}: ${value},\n`;
-                }
-            }
-
-            // Close the object
+            // Close the mapping object
             fileContent += `};\n`;
 
-            // Write the content to a file
+            // Write the file
             await writeFile(filePath, fileContent, 'utf-8');
-            console.log(`Mappings for ${entityName} written to ${filePath}`);
+            console.log(`File written successfully: ${filePath}`);
         }
+
+        console.log('All mappings written successfully.');
     } catch (error) {
         console.error('Error writing mappings to files:', error);
     }
