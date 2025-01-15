@@ -7,7 +7,6 @@ export const writeToJsonFile = async (data: string, filename: string) => {
         const directoryPath = path.dirname(filename);
         await mkdir(directoryPath, { recursive: true });
 
-        // Write the data to the file
         await writeFile(filename, JSON.stringify(data, null, 2), 'utf-8');
         console.log(`Data successfully written to ${filename}`);
     } catch (error) {
@@ -18,4 +17,8 @@ export const writeToJsonFile = async (data: string, filename: string) => {
 export const readFromJsonFile = async (filename: string) => {
     const data = await readFile(filename, 'utf-8');
     return JSON.parse(data);
+};
+
+export const readFromFile = async (filename: string) => {
+    return await readFile(filename, 'utf-8');
 };
