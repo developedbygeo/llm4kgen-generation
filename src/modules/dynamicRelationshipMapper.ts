@@ -1,4 +1,4 @@
-import { readdir, readFile, writeFile } from 'fs/promises';
+import { mkdir, readdir, readFile, writeFile } from 'fs/promises';
 import { logBigMessage } from '../utils/console';
 import { createCypherQueriesTool } from '../agent/tools/createCypherQueries';
 import path from 'path';
@@ -14,6 +14,9 @@ export const dynamicRelationshipMapper = async (
     logBigMessage(
         `Found ${relevantFiles.length} mapping files in ${mappingDir}`
     );
+
+    // Ensure the output directory exists
+    await mkdir(outputDir, { recursive: true });
 
     const relationshipsContent = await readFile(relationshipFile, 'utf-8');
     const relationships = JSON.parse(relationshipsContent);
@@ -34,6 +37,7 @@ export const dynamicRelationshipMapper = async (
 
         const queries = await createCypherQueriesTool.invoke(input);
 
+        console.log(queries);
         const outputFilePath = path.join(
             outputDir,
             `${file.replace('.ts', '.cypher')}`

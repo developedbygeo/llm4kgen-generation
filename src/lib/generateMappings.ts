@@ -29,6 +29,7 @@ export const writeMappingsToFiles = async (
                 attributes
             )) {
                 fileContent += `    ${attributeName}: (row: Record<string, string | null>) => ({\n`;
+                fileContent += `        ${attributeDetails.entity.toLowerCase() === 'artist' ? 'artistID: row["ConstituentID"]' : 'objectID: row["objectID"]'},\n`;
                 fileContent += `        name: row['${attributeDetails.name}'] ?? null,\n`;
                 fileContent += `        entity: '${attributeDetails.entity}',\n`;
                 fileContent += `        relationship: '${attributeDetails.relationship}',\n`;
