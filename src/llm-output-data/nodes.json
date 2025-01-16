@@ -1,0 +1,212 @@
+[
+  {
+    "entity": "Artist",
+    "name": "DisplayName",
+    "relationship": "HAS_NATIONALITY",
+    "attribute": "Nationality",
+    "value": "Nationality Value"
+  },
+  {
+    "entity": "Artist",
+    "name": "DisplayName",
+    "relationship": "HAS_GENDER",
+    "attribute": "Gender",
+    "value": "Gender Value"
+  },
+  {
+    "entity": "Artist",
+    "name": "DisplayName",
+    "relationship": "HAS_BEGIN_DATE",
+    "attribute": "BeginDate",
+    "value": "BeginDate Value"
+  },
+  {
+    "entity": "Artist",
+    "name": "DisplayName",
+    "relationship": "HAS_END_DATE",
+    "attribute": "EndDate",
+    "value": "EndDate Value"
+  },
+  {
+    "entity": "Artist",
+    "name": "DisplayName",
+    "relationship": "HAS_BIOGRAPHY",
+    "attribute": "ArtistBio",
+    "value": "ArtistBio Value"
+  },
+  {
+    "entity": "Artist",
+    "name": "DisplayName",
+    "relationship": "HAS_WIKI_QID",
+    "attribute": "Wiki QID",
+    "value": "Wiki QID Value"
+  },
+  {
+    "entity": "Artist",
+    "name": "DisplayName",
+    "relationship": "HAS_ULAN",
+    "attribute": "ULAN",
+    "value": "ULAN Value"
+  },
+  {
+    "entity": "Artwork",
+    "name": "Title",
+    "relationship": "CREATED_BY_ARTIST",
+    "attribute": "Artist",
+    "value": "Artist Name"
+  },
+  {
+    "entity": "Artwork",
+    "name": "Title",
+    "relationship": "HAS_DATE",
+    "attribute": "Date",
+    "value": "Date Value"
+  },
+  {
+    "entity": "Artwork",
+    "name": "Title",
+    "relationship": "HAS_MEDIUM",
+    "attribute": "Medium",
+    "value": "Medium Value"
+  },
+  {
+    "entity": "Artwork",
+    "name": "Title",
+    "relationship": "HAS_DIMENSIONS",
+    "attribute": "Dimensions",
+    "value": "Dimensions Value"
+  },
+  {
+    "entity": "Artwork",
+    "name": "Title",
+    "relationship": "HAS_CREDIT_LINE",
+    "attribute": "CreditLine",
+    "value": "CreditLine Value"
+  },
+  {
+    "entity": "Artwork",
+    "name": "Title",
+    "relationship": "HAS_ACCESSION_NUMBER",
+    "attribute": "AccessionNumber",
+    "value": "AccessionNumber Value"
+  },
+  {
+    "entity": "Artwork",
+    "name": "Title",
+    "relationship": "HAS_CLASSIFICATION",
+    "attribute": "Classification",
+    "value": "Classification Value"
+  },
+  {
+    "entity": "Artwork",
+    "name": "Title",
+    "relationship": "BELONGS_TO_DEPARTMENT",
+    "attribute": "Department",
+    "value": "Department Value"
+  },
+  {
+    "entity": "Artwork",
+    "name": "Title",
+    "relationship": "HAS_DATE_ACQUIRED",
+    "attribute": "DateAcquired",
+    "value": "DateAcquired Value"
+  },
+  {
+    "entity": "Artwork",
+    "name": "Title",
+    "relationship": "HAS_CATALOGED_STATUS",
+    "attribute": "Cataloged",
+    "value": "Cataloged Value"
+  },
+  {
+    "entity": "Artwork",
+    "name": "Title",
+    "relationship": "HAS_OBJECT_ID",
+    "attribute": "ObjectID",
+    "value": "ObjectID Value"
+  },
+  {
+    "entity": "Artwork",
+    "name": "Title",
+    "relationship": "HAS_URL",
+    "attribute": "URL",
+    "value": "URL Value"
+  },
+  {
+    "entity": "Artwork",
+    "name": "Title",
+    "relationship": "HAS_IMAGE_URL",
+    "attribute": "ImageURL",
+    "value": "ImageURL Value"
+  },
+  {
+    "entity": "Artwork",
+    "name": "Title",
+    "relationship": "HAS_ON_VIEW_STATUS",
+    "attribute": "OnView",
+    "value": "OnView Value"
+  },
+  {
+    "entity": "Artwork",
+    "name": "Title",
+    "relationship": "HAS_CIRCUMFERENCE",
+    "attribute": "Circumference (cm)",
+    "value": "Circumference Value"
+  },
+  {
+    "entity": "Artwork",
+    "name": "Title",
+    "relationship": "HAS_DEPTH",
+    "attribute": "Depth (cm)",
+    "value": "Depth Value"
+  },
+  {
+    "entity": "Artwork",
+    "name": "Title",
+    "relationship": "HAS_DIAMETER",
+    "attribute": "Diameter (cm)",
+    "value": "Diameter Value"
+  },
+  {
+    "entity": "Artwork",
+    "name": "Title",
+    "relationship": "HAS_HEIGHT",
+    "attribute": "Height (cm)",
+    "value": "Height Value"
+  },
+  {
+    "entity": "Artwork",
+    "name": "Title",
+    "relationship": "HAS_LENGTH",
+    "attribute": "Length (cm)",
+    "value": "Length Value"
+  },
+  {
+    "entity": "Artwork",
+    "name": "Title",
+    "relationship": "HAS_WEIGHT",
+    "attribute": "Weight (kg)",
+    "value": "Weight Value"
+  },
+  {
+    "entity": "Artwork",
+    "name": "Title",
+    "relationship": "HAS_WIDTH",
+    "attribute": "Width (cm)",
+    "value": "Width Value"
+  },
+  {
+    "entity": "Artwork",
+    "name": "Title",
+    "relationship": "HAS_SEAT_HEIGHT",
+    "attribute": "Seat Height (cm)",
+    "value": "Seat Height Value"
+  },
+  {
+    "entity": "Artwork",
+    "name": "Title",
+    "relationship": "HAS_DURATION",
+    "attribute": "Duration (sec.)",
+    "value": "Duration Value"
+  }
+]
