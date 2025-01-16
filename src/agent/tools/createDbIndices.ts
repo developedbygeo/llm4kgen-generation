@@ -14,7 +14,6 @@ export const createDbIndicesTool = new DynamicTool({
         );
 
         const prompt = constructPromptFoDbIndices(processedInput);
-        console.log(prompt);
 
         const response = await llm.invoke(prompt);
         return sanitizeBackticksFromString(

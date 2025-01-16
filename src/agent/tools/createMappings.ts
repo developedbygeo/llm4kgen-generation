@@ -34,29 +34,50 @@ export const createMappingTool = new DynamicTool({
 
 // Helper function to construct the prompt for the LLM
 const constructMappingPrompt = (data: any) => {
-    console.log('------- DATA -------');
-    console.log(data);
     return `
-    You are an AI agent tasked with generating data mappings in TypeScript. Based on the provided data, 
-    you need to infer types for each attribute and create appropriate parsing functions. 
-    Missing or null data should be handled with type inference.
+You are an AI agent tasked with generating mappings in valid JSON format based on the provided data. Each mapping will describe the logic for parsing attributes in a tabular dataset.
 
-    Data to process:
-    ${JSON.stringify(data, null, 2)}
+Data to process:
+${JSON.stringify(data, null, 2)}
 
-    For each entity:
-    - Use the (attribute) field from each row to determine the corresponding key in the mapping.
-    - Generate a function that handles parsing core properties (e.g., strings, numbers, dates, booleans).
-    - If a property is null or missing, infer the appropriate type based on the attribute's name (e.g., parse ConstituentID as a string if null).
-    - If you do not have enough information to infer the TypeScript type of a value, use any.
-    - Return the mappings in the following format:
-      {
-          name #DO NOT CHANGE KEY: row[(attribute)] ?? null,
-          entity #DO NOT CHANGE KEY: (entity from data to process),
-          relationship #DO NOT CHANGE KEY: (relationship),
-          value #DO NOT CHANGE KEY: row[(attribute)] #DO NOT EVALUATE row[(attribute)] ?? null,
-      }
-      // Repeat for other attributes
+For each entity:
+- Include the following properties in the mappings:
+  1. **name**: The display name of the attribute.
+  2. **value**: The value of the attribute, represented as a placeholder string that references the row's attribute.
+  3. **relationship**: The inferred relationship, specified explicitly (e.g., "HAS_NATIONALITY").
+  4. **entity**: The name of the entity.
 
-    Provide only the mappings in the above valid JSON format, without additional text or context.  `;
+The output format should look like this:
+
+{
+  "ArtistMappings": {
+    "nationality": {
+      "name": "Nationality",
+      "value": "row['Nationality']",
+      "relationship": "HAS_NATIONALITY",
+      "entity": "Artist"
+    },
+    "gender": {
+      "name": "Gender",
+      "value": "row['Gender']",
+      "relationship": "HAS_GENDER",
+      "entity": "Artist"
+    }
+  },
+  "artworkMappings": {
+    "Title": {
+      "name": "Title",
+      "value": "row['Title']",
+      "relationship": "HAS_TITLE",
+      "entity": "Artwork"
+    }
+  }
+}
+
+Rules:
+- Ensure the output is valid JSON.
+- Use placeholder strings like \`row['AttributeName']\` to represent values.
+- Do not include JavaScript functions or non-JSON constructs.
+- Ensure proper key formatting and capitalization.
+`;
 };

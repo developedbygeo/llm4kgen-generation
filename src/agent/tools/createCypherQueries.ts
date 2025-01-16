@@ -70,57 +70,57 @@ const constructCypherPrompt = ({
     relationships: string;
 }) => {
     return `
-    You are an AI agent tasked with generating Cypher queries for a Neo4j database.
-    The queries should efficiently create or match nodes and relationships based on the provided data.
+    You are an AI agent tasked with generating Cypher queries for a Neo4j database. The queries should handle both nodes and relationships based on the provided data.
 
     ### Requirements:
     1. **Node Creation:**
-       - Only process data for the "${entity}" entity. Do not generate queries for unrelated entities.
-       -  Use the "${entity}" label for node creation or matching.
-       - Use \`MERGE\` to ensure idempotent node creation.
-       - Include node properties from the input data (e.g., name, entity, attributes).
-       - Add \`created\` and \`updated\` timestamps for nodes.
+       - Create or match nodes for the "${entity}" entity using the \`MERGE\` clause.
+       - Use the "${entity}" label for nodes.
+       - Include properties from the input data (e.g., \`name\`, \`value\`).
+       - Add \`created\` and \`updated\` timestamps to nodes.
 
     2. **Relationship Creation:**
-       - Use the "relationship" field to define relationship types (e.g., HAS_NATIONALITY, HAS_ARTIST).
-       - Use \`MERGE\` to ensure idempotent relationship creation.
-       - Include relationship properties from the input data (e.g., attribute, value).
-       - Ensure relationships connect the correct nodes based on \`entity\` and \`name\`.
+       - Use the \`relationship\` field to define the type of relationship (e.g., HAS_CONSTITUENT_ID, HAS_NATIONALITY).
+       - Use \`MERGE\` for relationships to ensure idempotency.
+       - Include relationship properties like \`attribute\` and \`value\`.
+       - Connect nodes based on the \`relationship\` and \`value\` fields.
 
-    3. **Batch Processing:**
-       - Use \`UNWIND\` to process input data in batches.
-       - Parameterize all queries using \`$rows\` for efficient execution.
+    3. **Query Structure:**
+       - Start with \`UNWIND $rows AS row\` for batch processing.
+       - Use parameterized properties (e.g., \`row.name\`, \`row.value\`).
+       - Create nodes and relationships dynamically based on the data.
+       - Ensure null values are handled gracefully.
 
-    4. **Label and Property Normalization:**
-       - Normalize labels and properties to remove spaces and special characters (e.g., \`Height (cm)\` → \`HeightCm\`).
-       - Ensure all labels and property names conform to Neo4j naming conventions.
+    4. **Example Output Format:**
+       For an entity like "ArtistMappings" with a relationship "HAS_CONSTITUENT_ID", the output should look like this:
+
+       \`\`\`
+       UNWIND $rows AS row
+       MERGE (artist:Artist {name: row.name})
+       ON CREATE SET artist.created = timestamp(), artist.updated = timestamp()
+       ON MATCH SET artist.updated = timestamp()
+       WITH row, artist
+       WHERE row.relationship = 'HAS_CONSTITUENT_ID'
+       MERGE (artist)-[r:HAS_CONSTITUENT_ID]->(v:ConstituentID {value: row.value})
+       ON CREATE SET v.created = timestamp(), r.updated = timestamp()
+       ON MATCH SET r.updated = timestamp()
+       \`\`\`
 
     ### Input Data Format:
     - **Mapping File Content:**
-      Specifies how CSV columns map to Cypher properties or node types.
-
-      Example:
       ${mappingContent}
 
     - **Relationships Data:**
-      Specifies relationships between entities.
-
-      Example:
       ${JSON.stringify(relationships, null, 2)}
 
     ### Output Requirements:
     1. Generate Cypher queries that:
-       - Create or match nodes only for ${entity}.
-       - Create or match relationships between nodes using the "relationship" field.
-       - Include "attribute" and "value" fields as properties of nodes or relationships.
-       - Handle null values correctly.
+       - Create or match nodes for ${entity}.
+       - Create or match relationships using the \`relationship\` field.
+       - Use parameterized properties like \`row.name\` and \`row.value\`.
 
-    2. Format each query as follows:
-       - Start with: \`UNWIND $rows AS row\`.
-       - Use explicit labels for nodes (e.g., Artist, Artwork).
-       - Use explicit types for relationships (e.g., HAS_NATIONALITY, CREATED_BY).
-       - Parameterize properties using \`row\` (e.g., \`row.name\`, \`row.value\`).
+    2. Return the queries as a JSON array of strings, with each query in a single line.
 
-    3. Return the Cypher queries as a JSON array of strings. Each query should be a separate string in the array in one line, without any line breaks.
+    3. Ensure the queries conform to Neo4j conventions and handle null values.
     `;
 };
