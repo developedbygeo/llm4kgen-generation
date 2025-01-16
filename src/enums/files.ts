@@ -5,16 +5,16 @@ export const FILE_PATHS = {
 
     INGESTION_CODE: './src/modules/loadAndIngestData.ts',
 
-    // TEST
-    DUMMY_RELATIONSHIPS: './src/llm-output-data/relationships.json',
-    DUMMY_ROOT_MAPPINGS: './src/llm-output-data/mappings',
-    DUMMY_CYPHER_QUERIES: './src/llm-output-data/cypher-queries.json',
-    DUMMY_CYPHER_QUERIES_OUTPUT_DIR: './src/llm-output-data/cypher-queries',
-    DUMMY_ARTIST_CYPHERS:
+    OUTPUT_NODES: './src/llm-output-data/nodes.json',
+    OUTPUT_ROOT_MAPPINGS: './src/llm-output-data/outputMappings',
+    OUTPUT_CYPHER_QUERIES: './src/llm-output-data/cypher-queries.json',
+    OUTPUT_CYPHER_QUERIES_OUTPUT_DIR:
+        './src/llm-output-data/outputCypherQueries',
+    OUTPUT_ARTIST_CYPHERS:
         './src/llm-output-data/cypher-queries/ArtistParameterMapping.cypher',
-    DUMMY_ARTIST_MAPPINGS: './src/llm-output-data/mappings/artistParameter.ts',
-    DUMMY_ARTWORKS_CYPHERS:
+    OUTPUT_ARTIST_MAPPINGS: './src/llm-output-data/mappings/artistParameter.ts',
+    OUTPUT_ARTWORKS_CYPHERS:
         './src/llm-output-data/cypher-queries/ArtworkParameterMapping.cypher',
-    DUMMY_ARTWORKS_MAPPINGS:
+    OUTPUT_ARTWORKS_MAPPINGS:
         './src/llm-output-data/mappings/artworkParameter.ts',
 } as const;
