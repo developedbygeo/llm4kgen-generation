@@ -15,7 +15,7 @@ import { artworkMediumQuery } from './queries/artworkMedium';
 import { artworkOnViewQuery } from './queries/artworkOnView';
 import { createRelationshipQuery } from './queries/createRelationship';
 
-import path from 'path';
+import path, { resolve } from 'path';
 import { artistGenderQuery } from './queries/artistGender';
 import { artworkDimensionQuery } from './queries/artworkDimension';
 import { setupDbIndices } from './modules/setupDbIndices';
@@ -45,7 +45,10 @@ import prompts from 'prompts';
 import {
     RUNNABLE_SCRIPT_DESCRIPTION_ENUM,
     RUNNABLE_SCRIPT_ENUM,
+    RUNNABLE_SCRIPT_TITLE_ENUM,
 } from './enums/scripts';
+import { createNodes } from './modules/createNodes';
+import { mapAndParseData } from './modules/mapAndParseData';
 
 // BIG FILES
 // const artistsCsvPath = path.join(__dirname, 'data', 'Artists.csv');
@@ -80,9 +83,6 @@ async function main() {
     const conn = new Neo4jConnection(uri, user, password);
     logBigMessage('Connecting to Neo4j');
 
-    /* MODULE 0 - CREATE DB INDICES */
-    // await setupDbIndices(conn, files);
-
     logBigMessage('Welcome to the LLM Data Ingestion Toolbox');
     let exit = false;
 
@@ -93,12 +93,34 @@ async function main() {
             message: 'Which operation do you want to run?',
             choices: [
                 {
-                    title: RUNNABLE_SCRIPT_ENUM.GENERATE_DB_INDICES,
+                    title: RUNNABLE_SCRIPT_TITLE_ENUM.GENERATE_DB_INDICES,
                     value: RUNNABLE_SCRIPT_ENUM.GENERATE_DB_INDICES,
                     description:
                         RUNNABLE_SCRIPT_DESCRIPTION_ENUM.GENERATE_DB_INDICES,
                 },
-                { title: 'Script Two', value: 'scriptTwo' },
+                {
+                    title: RUNNABLE_SCRIPT_TITLE_ENUM.CREATE_NODES,
+                    value: RUNNABLE_SCRIPT_ENUM.CREATE_NODES,
+                    description: RUNNABLE_SCRIPT_DESCRIPTION_ENUM.CREATE_NODES,
+                },
+
+                {
+                    title: RUNNABLE_SCRIPT_TITLE_ENUM.MAP_AND_PARSE_DATA,
+                    value: RUNNABLE_SCRIPT_ENUM.MAP_AND_PARSE_DATA,
+                    description:
+                        RUNNABLE_SCRIPT_DESCRIPTION_ENUM.MAP_AND_PARSE_DATA,
+                },
+                {
+                    title: RUNNABLE_SCRIPT_TITLE_ENUM.CREATE_CYPHER_QUERIES,
+                    value: RUNNABLE_SCRIPT_ENUM.CREATE_CYPHER_QUERIES,
+                    description:
+                        RUNNABLE_SCRIPT_DESCRIPTION_ENUM.CREATE_CYPHER_QUERIES,
+                },
+                {
+                    title: RUNNABLE_SCRIPT_TITLE_ENUM.INGEST_DATA,
+                    value: RUNNABLE_SCRIPT_ENUM.INGEST_DATA,
+                    description: RUNNABLE_SCRIPT_DESCRIPTION_ENUM.INGEST_DATA,
+                },
                 { title: 'Exit', value: 'exit' },
             ],
         });
@@ -107,9 +129,21 @@ async function main() {
             case RUNNABLE_SCRIPT_ENUM.GENERATE_DB_INDICES:
                 await setupDbIndices(conn, files);
                 break;
-            case 'scriptTwo':
-                console.log('Running script two...');
+            case RUNNABLE_SCRIPT_ENUM.CREATE_NODES:
+                await createNodes(files);
                 break;
+            case RUNNABLE_SCRIPT_ENUM.MAP_AND_PARSE_DATA:
+                await mapAndParseData();
+                break;
+
+            case RUNNABLE_SCRIPT_ENUM.CREATE_CYPHER_QUERIES:
+                await dynamicRelationshipMapper(
+                    resolve(FILE_PATHS.OUTPUT_ROOT_MAPPINGS),
+                    resolve(FILE_PATHS.OUTPUT_NODES),
+                    resolve(FILE_PATHS.OUTPUT_CYPHER_QUERIES_OUTPUT_DIR)
+                );
+                break;
+
             case 'exit':
                 exit = true;
                 console.log('Exiting program. Goodbye!');
@@ -118,6 +152,9 @@ async function main() {
                 console.log('No valid script chosen.');
         }
     }
+
+    /* MODULE 0 - CREATE DB INDICES */
+    // await setupDbIndices(conn, files);
 
     /* MODULE 1 - BATCH AND CREATE RELATIONSHIPS */
 
