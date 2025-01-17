@@ -7,4 +7,5 @@ export const llm = new ChatGoogleGenerativeAI({
     apiKey: config.secrets.GOOGLE_API_KEY,
     temperature: 0.25,
     streaming: true,
+    verbose: false,
 });
