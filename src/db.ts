@@ -25,13 +25,11 @@ export class Neo4jConnection {
         this.driver.close();
     }
 
-    async runQuery(
-        query: string,
-        parameters: Record<string, any> = {}
-    ): Promise<void> {
-        const session: Session = this.driver.session();
+    async runQuery(query: string, parameters: Record<string, any> = {}) {
+        const session = this.driver.session();
         try {
-            await session.run(query, parameters);
+            const result = await session.run(query, parameters);
+            return result.records.map((record) => record.toObject());
         } finally {
             await session.close();
         }
