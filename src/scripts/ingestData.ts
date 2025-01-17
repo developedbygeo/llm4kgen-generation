@@ -16,7 +16,7 @@ export type IngestDataProps = {
     parameterMapping: Record<string, any>;
     additional: {
         entity: EntityToProcess;
-        isEntityMapping: boolean;
+        isCrossEntityMapping: boolean;
     };
 };
 
@@ -28,7 +28,7 @@ export const ingestDataScript = async (props: IngestDataProps) => {
     );
     logBigMessage('Connecting to Neo4j singleton');
 
-    const isEntityMapping = props.additional.isEntityMapping || false;
+    const isCrossEntityMapping = props.additional.isCrossEntityMapping || false;
 
     try {
         logBigMessage(`Creating ${props.additional.entity} nodes`);
@@ -36,11 +36,11 @@ export const ingestDataScript = async (props: IngestDataProps) => {
 
         await Promise.all(
             props.queries.map(async (query, index) => {
-                const mappingConnectorForArtist = isEntityMapping
+                const mappingConnectorForArtist = isCrossEntityMapping
                     ? entityArtistConnector(query)
                     : initialArtistConnector(query);
 
-                const mappingConnectorForArtwork = isEntityMapping
+                const mappingConnectorForArtwork = isCrossEntityMapping
                     ? entityArtworkConnector(query)
                     : initialArtworkConnector(query);
 

@@ -163,7 +163,10 @@ async function main() {
                         FILE_PATHS.OUTPUT_ARTIST_CYPHERS
                     ),
                     parameterMapping: ArtistMappingsParameterMapping,
-                    additional: { entity: 'artist', isEntityMapping: false },
+                    additional: {
+                        entity: 'artist',
+                        isCrossEntityMapping: false,
+                    },
                 });
 
                 logBigMessage('Ingested artists');
@@ -174,7 +177,10 @@ async function main() {
                         FILE_PATHS.OUTPUT_ARTWORKS_CYPHERS
                     ),
                     parameterMapping: ArtworkMappingsParameterMapping,
-                    additional: { entity: 'artwork', isEntityMapping: false },
+                    additional: {
+                        entity: 'artwork',
+                        isCrossEntityMapping: false,
+                    },
                 });
 
                 logBigMessage('Ingested artworks');
@@ -193,7 +199,10 @@ async function main() {
                         FILE_PATHS.OUTPUT_ENTITY_ARTIST_CYPHER
                     ),
                     parameterMapping: entityRelationshipsForArtistMapping,
-                    additional: { entity: 'artist', isEntityMapping: true },
+                    additional: {
+                        entity: 'artist',
+                        isCrossEntityMapping: true,
+                    },
                 });
 
                 await ingestDataScript({
@@ -202,7 +211,10 @@ async function main() {
                         FILE_PATHS.OUTPUT_ENTITY_ARTWORK_CYPHER
                     ),
                     parameterMapping: entityRelationshipsForArtworkMapping,
-                    additional: { entity: 'artwork', isEntityMapping: true },
+                    additional: {
+                        entity: 'artwork',
+                        isCrossEntityMapping: true,
+                    },
                 });
 
                 logBigMessage('Created relationships between entities');
