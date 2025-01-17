@@ -4,4 +4,6 @@ export const TOOL_NAMES = {
     CREATE_MAPPINGS: 'create_mappings',
     CREATE_CYPHER_QUERIES: 'create_cypher_queries',
     IDENTIFY_MAPPING_FOR_QUERY: 'identify_mapping_for_query',
+    CREATE_RELATIONSHIPS_BETWEEN_ENTITIES:
+        'create_relationships_between_entities',
 } as const;
