@@ -1,11 +1,12 @@
 import { readFile } from 'fs/promises';
+import { resolve } from 'path';
 
 export const extractQueriesFromCypherFile = async (
     cypherFile: string
 ): Promise<string[]> => {
     try {
         // Read the Cypher file content
-        const fileContent = await readFile(cypherFile, 'utf-8');
+        const fileContent = await readFile(resolve(cypherFile), 'utf-8');
 
         // Split the file content into queries using new lines
         const queries = fileContent
