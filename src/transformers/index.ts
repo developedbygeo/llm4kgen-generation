@@ -13,6 +13,10 @@ export const transformRowDynamicallyForCypherQueries = (
                 ? transformArtistRow(row)
                 : transformArtworkRow(row);
         transformed.push(...rowRelationships);
+
+        if (entity === 'artist') {
+            console.log(transformed);
+        }
     }
     return transformed;
 };

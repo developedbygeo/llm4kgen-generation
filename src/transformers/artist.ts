@@ -15,6 +15,7 @@ export const transformArtistRow = (
     const results: Record<string, any>[] = [];
 
     const artistName = row['DisplayName'] || 'Unknown';
+    const artistID = row['ConstituentID'] || 'Unknown';
 
     // Iterate over each column in the row
     for (const [key, value] of Object.entries(row)) {
@@ -31,6 +32,7 @@ export const transformArtistRow = (
             // Build the dynamic relationship object
             results.push({
                 name: artistName,
+                artistID,
                 relationship, // e.g., 'HAS_BIO'
                 value: relationshipValue, // e.g., 'American, 1930–1992'
             });
