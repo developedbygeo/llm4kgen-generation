@@ -66,4 +66,28 @@ export const ArtistMappingsParameterMapping = {
         relationship: 'HAS_ULAN',
         value: row['ULAN'] ?? null,
     }),
+
+    relationships: (row: Record<string, string>) => {
+        const relationships: Record<string, any | null> = {
+            HAS_CONSTITUENT_ID: row['ConstituentID'] ?? null,
+            HAS_BIO: row['ArtistBio'] ?? null,
+            HAS_NATIONALITY: row['Nationality'] ?? null,
+            HAS_GENDER: row['Gender'] ?? null,
+            HAS_BEGIN_DATE: row['BeginDate']
+                ? parseInt(row['BeginDate'], 10)
+                : null,
+            HAS_END_DATE: row['EndDate'] ? parseInt(row['EndDate'], 10) : null,
+            HAS_WIKI_QID: row['Wiki QID'] ?? null,
+            HAS_ULAN: row['ULAN'] ?? null,
+        };
+
+        return Object.entries(relationships)
+            .filter(([_, value]) => value !== null)
+            .map(([relationship, value]) => ({
+                artistID: row['ConstituentID'],
+                name: row['DisplayName'],
+                value,
+                relationship,
+            }));
+    },
 };
