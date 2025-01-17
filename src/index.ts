@@ -49,6 +49,11 @@ import {
 } from './enums/scripts';
 import { createNodes } from './modules/createNodes';
 import { mapAndParseData } from './modules/mapAndParseData';
+import { ArtistMappingsParameterMapping } from './llm-output-data/outputMappings/ArtistMappingsParameterMapping';
+import { ArtworkMappingsParameterMapping } from './llm-output-data/outputMappings/ArtworkMappingsParameterMapping';
+import { createRelationshipCyphersForEntities } from './modules/createRelationshipCyphersForEntities';
+import { entityRelationshipsForArtistMapping } from './llm-output-data/entityRelationshipMappings/entityRelationshipsForArtistMapping';
+import { entityRelationshipsForArtworkMapping } from './llm-output-data/entityRelationshipMappings/entityRelationshipsForArtworkMapping';
 
 // BIG FILES
 // const artistsCsvPath = path.join(__dirname, 'data', 'Artists.csv');
@@ -121,6 +126,13 @@ async function main() {
                     value: RUNNABLE_SCRIPT_ENUM.INGEST_DATA,
                     description: RUNNABLE_SCRIPT_DESCRIPTION_ENUM.INGEST_DATA,
                 },
+
+                {
+                    title: RUNNABLE_SCRIPT_TITLE_ENUM.CREATE_RELATIONSHIPS_BETWEEN_ENTITIES,
+                    value: RUNNABLE_SCRIPT_ENUM.CREATE_RELATIONSHIPS_BETWEEN_ENTITIES,
+                    description:
+                        RUNNABLE_SCRIPT_DESCRIPTION_ENUM.CREATE_RELATIONSHIPS_BETWEEN_ENTITIES,
+                },
                 { title: 'Exit', value: 'exit' },
             ],
         });
@@ -144,6 +156,58 @@ async function main() {
                 );
                 break;
 
+            case RUNNABLE_SCRIPT_ENUM.INGEST_DATA:
+                await ingestDataScript({
+                    filePath: artistsCsvPath,
+                    queries: await extractQueriesFromCypherFile(
+                        FILE_PATHS.OUTPUT_ARTIST_CYPHERS
+                    ),
+                    parameterMapping: ArtistMappingsParameterMapping,
+                    additional: { entity: 'artist', isEntityMapping: false },
+                });
+
+                logBigMessage('Ingested artists');
+
+                await ingestDataScript({
+                    filePath: artworksCsvPath,
+                    queries: await extractQueriesFromCypherFile(
+                        FILE_PATHS.OUTPUT_ARTWORKS_CYPHERS
+                    ),
+                    parameterMapping: ArtworkMappingsParameterMapping,
+                    additional: { entity: 'artwork', isEntityMapping: false },
+                });
+
+                logBigMessage('Ingested artworks');
+                break;
+
+            case RUNNABLE_SCRIPT_ENUM.CREATE_RELATIONSHIPS_BETWEEN_ENTITIES:
+                await createRelationshipCyphersForEntities({
+                    outputDir: resolve(
+                        FILE_PATHS.OUTPUT_ENTITY_RELATIONSHIP_DIR
+                    ),
+                });
+
+                await ingestDataScript({
+                    filePath: artistsCsvPath,
+                    queries: await extractQueriesFromCypherFile(
+                        FILE_PATHS.OUTPUT_ENTITY_ARTIST_CYPHER
+                    ),
+                    parameterMapping: entityRelationshipsForArtistMapping,
+                    additional: { entity: 'artist', isEntityMapping: true },
+                });
+
+                await ingestDataScript({
+                    filePath: artworksCsvPath,
+                    queries: await extractQueriesFromCypherFile(
+                        FILE_PATHS.OUTPUT_ENTITY_ARTWORK_CYPHER
+                    ),
+                    parameterMapping: entityRelationshipsForArtworkMapping,
+                    additional: { entity: 'artwork', isEntityMapping: true },
+                });
+
+                logBigMessage('Created relationships between entities');
+                break;
+            // create relationships based on db.schema here
             case 'exit':
                 exit = true;
                 console.log('Exiting program. Goodbye!');
@@ -152,60 +216,6 @@ async function main() {
                 console.log('No valid script chosen.');
         }
     }
-
-    /* MODULE 0 - CREATE DB INDICES */
-    // await setupDbIndices(conn, files);
-
-    /* MODULE 1 - BATCH AND CREATE RELATIONSHIPS */
-
-    // const results = await batchFilesToProcess(filesToProcess);
-    // const relationships = await identifyRelationshipsTool.invoke(results);
-    // console.log(logBigMessage('Writing relationships'));
-    // console.log(relationships);
-    // await writeToJsonFile(JSON.parse(relationships), FILE_PATHS.RELATIONSHIPS);
-    // console.log(
-    //     logBigMessage(
-    //         `Relationships found: ${JSON.parse(relationships).length}`
-    //     )
-    // );
-
-    /* MODULE 2 - MAP AND PARSE DATA */
-    // const storedRelationships = await readFromJsonFile(FILE_PATHS.RELATIONSHIPS);
-    // const storedRelationshipsString = JSON.stringify(storedRelationships);
-
-    // const generatedMappings = await createMappingTool.invoke(
-    //     storedRelationshipsString
-    // );
-
-    // console.log('Writing mappings');
-    // await writeMappingsToFiles(generatedMappings, FILE_PATHS.ROOT_MAPPINGS);
-
-    /* MODULE 3 - CREATE CYPHER QUERIES */
-    // await dynamicRelationshipMapper(FILE_PATHS.DUMMY_ROOT_MAPPINGS, FILE_PATHS.DUMMY_RELATIONSHIPS, FILE_PATHS.DUMMY_CYPHER_QUERIES_OUTPUT_DIR);
-
-    // /* MODULE 4 - INGEST DATA */
-
-    // await ingestDataScript({
-    //     filePath: artistsCsvPath,
-    //     queries: await extractQueriesFromCypherFile(
-    //         FILE_PATHS.DUMMY_ARTIST_CYPHERS
-    //     ),
-    //     parameterMapping: artistParameterMapping,
-    //     additional: { entity: 'artist' },
-    // });
-
-    // logBigMessage('Ingested artists');
-
-    // await ingestDataScript({
-    //     filePath: artworksCsvPath,
-    //     queries: await extractQueriesFromCypherFile(
-    //         FILE_PATHS.DUMMY_ARTWORKS_CYPHERS
-    //     ),
-    //     parameterMapping: artworkParameterMapping,
-    //     additional: { entity: 'artwork' },
-    // });
-
-    // logBigMessage('Ingested artworks');
 }
 
 main();
