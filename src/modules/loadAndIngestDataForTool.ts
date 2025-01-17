@@ -53,17 +53,18 @@ export async function loadCsvAndIngestDataForTool(
                                     await tx.run(query, {
                                         rows: transformedRows,
                                     });
-                                    console.log(transformedRows);
+                                    // console.log(transformedRows);
                                 }
                             });
                         } finally {
                             await session.close();
                         }
                     }
+                    logBigMessage('SUCCESSFULLY LOADED DATA');
                     resolve();
                 } catch (error) {
                     logBigMessage('ERROR LOADING DATA');
-                    console.log(rows);
+                    console.log(error);
                     reject(error);
                 }
             })
