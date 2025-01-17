@@ -2,6 +2,7 @@ import { DynamicTool } from '@langchain/core/tools';
 import { TOOL_NAMES } from '../../enums/tools';
 import { llm } from '../llm';
 import {
+    convertStringFromModelToJSONArray,
     extractEntityFromFileName,
     sanitizeBackticksFromString,
 } from '../../utils/string';
@@ -38,20 +39,8 @@ export const createCypherQueriesTool = new DynamicTool({
         console.log('Cleaned LLM response:', cleanedResponse);
 
         try {
-            // Step 5: Parse the JSON string
-            const rawQueries = JSON.parse(cleanedResponse);
-
-            // Step 6: Clean up each query string
-            const cleanedQueries = rawQueries.map((query: string) =>
-                query
-                    .replace(/\\n/g, '\n')
-                    .replace(/\\t/g, '\t')
-                    .replace(/\\\"/g, '"')
-            );
-
-            console.log('Cleaned Cypher Queries:', cleanedQueries);
-
-            // Return cleaned queries as an iterable array
+            const cleanedQueries =
+                convertStringFromModelToJSONArray(cleanedResponse);
             return cleanedQueries;
         } catch (error) {
             console.error('Error parsing LLM response as JSON:', error);
