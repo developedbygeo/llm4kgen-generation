@@ -1,12 +1,16 @@
 import { mkdir, readdir, readFile, writeFile } from 'fs/promises';
 import { logBigMessage } from '../utils/console';
-import { createCypherQueriesTool } from '../agent/tools/createCypherQueries';
+import {
+    createCypherQueriesTool,
+    createCypherQueriesToolWithOntologyRag,
+} from '../agent/tools/createCypherQueries';
 import path from 'path';
 
 export const dynamicRelationshipMapper = async (
     mappingDir: string,
     relationshipFile: string,
-    outputDir: string
+    outputDir: string,
+    useOwlRag: boolean = false
 ) => {
     const files = await readdir(mappingDir);
     const relevantFiles = files.filter((file) => file.endsWith('.ts'));
@@ -35,7 +39,14 @@ export const dynamicRelationshipMapper = async (
             relationships,
         });
 
-        const queries = await createCypherQueriesTool.invoke(input);
+        let queries: string[] = [];
+
+        if (useOwlRag) {
+            queries =
+                await createCypherQueriesToolWithOntologyRag.invoke(input);
+        } else {
+            queries = await createCypherQueriesTool.invoke(input);
+        }
 
         console.log(queries);
         const outputFilePath = path.join(
