@@ -19,7 +19,7 @@ import path, { resolve } from 'path';
 import { artistGenderQuery } from './queries/artistGender';
 import { artworkDimensionQuery } from './queries/artworkDimension';
 import { setupDbIndices } from './modules/setupDbIndices';
-import { logBigMessage } from './utils/console';
+import { logBigMessage, logRunningScript } from './utils/console';
 import {
     batchFilesToProcess,
     extractFirstTwoRows,
@@ -54,6 +54,7 @@ import { ArtworkMappingsParameterMapping } from './llm-output-data/outputMapping
 import { createRelationshipCyphersForEntities } from './modules/createRelationshipCyphersForEntities';
 import { entityRelationshipsForArtistMapping } from './llm-output-data/entityRelationshipMappings/entityRelationshipsForArtistMapping';
 import { entityRelationshipsForArtworkMapping } from './llm-output-data/entityRelationshipMappings/entityRelationshipsForArtworkMapping';
+import { ArtistMappingsParameterMappingForRag } from './llm-output-data/outputMappingsWithRag/ArtistMappingsParameterMappingForRag';
 
 // BIG FILES
 // const artistsCsvPath = path.join(__dirname, 'data', 'Artists.csv');
@@ -96,6 +97,7 @@ async function main() {
             type: 'select',
             name: 'script',
             message: 'Which operation do you want to run?',
+            style: 'single',
             choices: [
                 {
                     title: RUNNABLE_SCRIPT_TITLE_ENUM.GENERATE_DB_INDICES,
@@ -104,9 +106,22 @@ async function main() {
                         RUNNABLE_SCRIPT_DESCRIPTION_ENUM.GENERATE_DB_INDICES,
                 },
                 {
+                    title: RUNNABLE_SCRIPT_TITLE_ENUM.GENERATE_DB_INDICES_WITH_ONTOLOGY,
+                    value: RUNNABLE_SCRIPT_ENUM.GENERATE_DB_INDICES_WITH_ONTOLOGY,
+                    description:
+                        RUNNABLE_SCRIPT_DESCRIPTION_ENUM.GENERATE_DB_INDICES_WITH_ONTOLOGY,
+                },
+                {
                     title: RUNNABLE_SCRIPT_TITLE_ENUM.CREATE_NODES,
                     value: RUNNABLE_SCRIPT_ENUM.CREATE_NODES,
                     description: RUNNABLE_SCRIPT_DESCRIPTION_ENUM.CREATE_NODES,
+                },
+
+                {
+                    title: RUNNABLE_SCRIPT_TITLE_ENUM.CREATE_NODES_WITH_ONTOLOGY,
+                    value: RUNNABLE_SCRIPT_ENUM.CREATE_NODES_WITH_ONTOLOGY,
+                    description:
+                        RUNNABLE_SCRIPT_DESCRIPTION_ENUM.CREATE_NODES_WITH_ONTOLOGY,
                 },
 
                 {
@@ -115,6 +130,14 @@ async function main() {
                     description:
                         RUNNABLE_SCRIPT_DESCRIPTION_ENUM.MAP_AND_PARSE_DATA,
                 },
+
+                {
+                    title: RUNNABLE_SCRIPT_TITLE_ENUM.MAP_AND_PARSE_DATA_WITH_ONTOLOGY,
+                    value: RUNNABLE_SCRIPT_ENUM.MAP_AND_PARSE_DATA_WITH_ONTOLOGY,
+                    description:
+                        RUNNABLE_SCRIPT_DESCRIPTION_ENUM.MAP_AND_PARSE_DATA_WITH_ONTOLOGY,
+                },
+
                 {
                     title: RUNNABLE_SCRIPT_TITLE_ENUM.CREATE_CYPHER_QUERIES,
                     value: RUNNABLE_SCRIPT_ENUM.CREATE_CYPHER_QUERIES,
@@ -122,9 +145,23 @@ async function main() {
                         RUNNABLE_SCRIPT_DESCRIPTION_ENUM.CREATE_CYPHER_QUERIES,
                 },
                 {
+                    title: RUNNABLE_SCRIPT_TITLE_ENUM.CREATE_CYPHER_QUERIES_WITH_ONTOLOGY,
+                    value: RUNNABLE_SCRIPT_ENUM.CREATE_CYPHER_QUERIES_WITH_ONTOLOGY,
+                    description:
+                        RUNNABLE_SCRIPT_DESCRIPTION_ENUM.CREATE_CYPHER_QUERIES_WITH_ONTOLOGY,
+                },
+
+                {
                     title: RUNNABLE_SCRIPT_TITLE_ENUM.INGEST_DATA,
                     value: RUNNABLE_SCRIPT_ENUM.INGEST_DATA,
                     description: RUNNABLE_SCRIPT_DESCRIPTION_ENUM.INGEST_DATA,
+                },
+
+                {
+                    title: RUNNABLE_SCRIPT_TITLE_ENUM.INGEST_DATA_WITH_ONTOLOGY,
+                    value: RUNNABLE_SCRIPT_ENUM.INGEST_DATA_WITH_ONTOLOGY,
+                    description:
+                        RUNNABLE_SCRIPT_DESCRIPTION_ENUM.INGEST_DATA_WITH_ONTOLOGY,
                 },
 
                 {
@@ -133,22 +170,54 @@ async function main() {
                     description:
                         RUNNABLE_SCRIPT_DESCRIPTION_ENUM.CREATE_RELATIONSHIPS_BETWEEN_ENTITIES,
                 },
+
                 { title: 'Exit', value: 'exit' },
             ],
         });
 
         switch (response.script) {
             case RUNNABLE_SCRIPT_ENUM.GENERATE_DB_INDICES:
+                logRunningScript(
+                    RUNNABLE_SCRIPT_TITLE_ENUM.GENERATE_DB_INDICES
+                );
                 await setupDbIndices(conn, files);
                 break;
+
+            case RUNNABLE_SCRIPT_ENUM.GENERATE_DB_INDICES_WITH_ONTOLOGY:
+                logRunningScript(
+                    RUNNABLE_SCRIPT_TITLE_ENUM.GENERATE_DB_INDICES_WITH_ONTOLOGY
+                );
+                await setupDbIndices(conn, files, true);
+                break;
+
             case RUNNABLE_SCRIPT_ENUM.CREATE_NODES:
+                logRunningScript(RUNNABLE_SCRIPT_TITLE_ENUM.CREATE_NODES);
                 await createNodes(files);
                 break;
+
+            case RUNNABLE_SCRIPT_ENUM.CREATE_NODES_WITH_ONTOLOGY:
+                logRunningScript(
+                    RUNNABLE_SCRIPT_TITLE_ENUM.CREATE_NODES_WITH_ONTOLOGY
+                );
+                await createNodes(files, true);
+                break;
+
             case RUNNABLE_SCRIPT_ENUM.MAP_AND_PARSE_DATA:
+                logRunningScript(RUNNABLE_SCRIPT_TITLE_ENUM.MAP_AND_PARSE_DATA);
                 await mapAndParseData();
                 break;
 
+            case RUNNABLE_SCRIPT_ENUM.MAP_AND_PARSE_DATA_WITH_ONTOLOGY:
+                logRunningScript(
+                    RUNNABLE_SCRIPT_TITLE_ENUM.MAP_AND_PARSE_DATA_WITH_ONTOLOGY
+                );
+                await mapAndParseData(true);
+                break;
+
             case RUNNABLE_SCRIPT_ENUM.CREATE_CYPHER_QUERIES:
+                logRunningScript(
+                    RUNNABLE_SCRIPT_TITLE_ENUM.CREATE_CYPHER_QUERIES
+                );
                 await dynamicRelationshipMapper(
                     resolve(FILE_PATHS.OUTPUT_ROOT_MAPPINGS),
                     resolve(FILE_PATHS.OUTPUT_NODES),
@@ -156,13 +225,30 @@ async function main() {
                 );
                 break;
 
+            case RUNNABLE_SCRIPT_ENUM.CREATE_CYPHER_QUERIES_WITH_ONTOLOGY:
+                logRunningScript(
+                    RUNNABLE_SCRIPT_TITLE_ENUM.CREATE_CYPHER_QUERIES_WITH_ONTOLOGY
+                );
+                await dynamicRelationshipMapper(
+                    resolve(FILE_PATHS.OUTPUT_ROOT_MAPPINGS_WITH_RAG),
+                    resolve(FILE_PATHS.OUTPUT_NODES),
+                    resolve(FILE_PATHS.OUTPUT_CYPHER_QUERIES_OUTPUT_DIR),
+                    true
+                );
+                break;
+
             case RUNNABLE_SCRIPT_ENUM.INGEST_DATA:
+
+            case RUNNABLE_SCRIPT_ENUM.INGEST_DATA_WITH_ONTOLOGY:
+                logRunningScript(
+                    RUNNABLE_SCRIPT_TITLE_ENUM.INGEST_DATA_WITH_ONTOLOGY
+                );
                 await ingestDataScript({
                     filePath: artistsCsvPath,
                     queries: await extractQueriesFromCypherFile(
                         FILE_PATHS.OUTPUT_ARTIST_CYPHERS
                     ),
-                    parameterMapping: ArtistMappingsParameterMapping,
+                    parameterMapping: ArtistMappingsParameterMappingForRag,
                     additional: {
                         entity: 'artist',
                         isCrossEntityMapping: false,
@@ -187,6 +273,9 @@ async function main() {
                 break;
 
             case RUNNABLE_SCRIPT_ENUM.CREATE_RELATIONSHIPS_BETWEEN_ENTITIES:
+                logRunningScript(
+                    RUNNABLE_SCRIPT_TITLE_ENUM.CREATE_RELATIONSHIPS_BETWEEN_ENTITIES
+                );
                 await createRelationshipCyphersForEntities({
                     outputDir: resolve(
                         FILE_PATHS.OUTPUT_ENTITY_RELATIONSHIP_DIR
