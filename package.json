@@ -14,6 +14,7 @@
         "@langchain/google-genai": "^0.1.6",
         "@langchain/langgraph": "^0.2.39",
         "@types/lodash.merge": "^4.6.9",
+        "chalk": "^5.4.1",
         "csv-parser": "^3.0.0",
         "dotenv": "^16.4.5",
         "langchain": "^0.3.10",
