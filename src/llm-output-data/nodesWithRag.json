@@ -1,0 +1,506 @@
+[
+  {
+    "entity": "Artist",
+    "name": "John Singleton Copley",
+    "relationship": "HAS_BIO",
+    "attribute": "ArtistBio",
+    "value": "American, 1738-1815"
+  },
+  {
+    "entity": "Artist",
+    "name": "John Singleton Copley",
+    "relationship": "HAS_NATIONALITY",
+    "attribute": "Nationality",
+    "value": "American"
+  },
+  {
+    "entity": "Artist",
+    "name": "John Singleton Copley",
+    "relationship": "HAS_GENDER",
+    "attribute": "Gender",
+    "value": "Male"
+  },
+  {
+    "entity": "Artist",
+    "name": "John Singleton Copley",
+    "relationship": "HAS_BEGIN_DATE",
+    "attribute": "BeginDate",
+    "value": "1738"
+  },
+  {
+    "entity": "Artist",
+    "name": "John Singleton Copley",
+    "relationship": "HAS_END_DATE",
+    "attribute": "EndDate",
+    "value": "1815"
+  },
+  {
+    "entity": "Artist",
+    "name": "John Singleton Copley",
+    "relationship": "HAS_WIKI_QID",
+    "attribute": "Wiki QID",
+    "value": "Q313498"
+  },
+  {
+    "entity": "Artist",
+    "name": "John Singleton Copley",
+    "relationship": "HAS_ULAN",
+    "attribute": "ULAN",
+    "value": "500000737"
+  },
+  {
+    "entity": "Artist",
+    "name": "Benjamin West",
+    "relationship": "HAS_BIO",
+    "attribute": "ArtistBio",
+    "value": "American, 1738-1820"
+  },
+  {
+    "entity": "Artist",
+    "name": "Benjamin West",
+    "relationship": "HAS_NATIONALITY",
+    "attribute": "Nationality",
+    "value": "American"
+  },
+  {
+    "entity": "Artist",
+    "name": "Benjamin West",
+    "relationship": "HAS_GENDER",
+    "attribute": "Gender",
+    "value": "Male"
+  },
+  {
+    "entity": "Artist",
+    "name": "Benjamin West",
+    "relationship": "HAS_BEGIN_DATE",
+    "attribute": "BeginDate",
+    "value": "1738"
+  },
+  {
+    "entity": "Artist",
+    "name": "Benjamin West",
+    "relationship": "HAS_END_DATE",
+    "attribute": "EndDate",
+    "value": "1820"
+  },
+  {
+    "entity": "Artist",
+    "name": "Benjamin West",
+    "relationship": "HAS_WIKI_QID",
+    "attribute": "Wiki QID",
+    "value": "Q310807"
+  },
+  {
+    "entity": "Artist",
+    "name": "Benjamin West",
+    "relationship": "HAS_ULAN",
+    "attribute": "ULAN",
+    "value": "500011069"
+  },
+  {
+    "entity": "Artwork",
+    "name": "Watson and the Shark",
+    "relationship": "HAS_ARTIST",
+    "attribute": "Artist",
+    "value": "John Singleton Copley"
+  },
+  {
+    "entity": "Artwork",
+    "name": "Watson and the Shark",
+    "relationship": "HAS_ARTIST_ID",
+    "attribute": "ConstituentID",
+    "value": "1621"
+  },
+  {
+    "entity": "Artwork",
+    "name": "Watson and the Shark",
+    "relationship": "HAS_ARTIST_BIO",
+    "attribute": "ArtistBio",
+    "value": "American, 1738-1815"
+  },
+  {
+    "entity": "Artwork",
+    "name": "Watson and the Shark",
+    "relationship": "HAS_NATIONALITY",
+    "attribute": "Nationality",
+    "value": "American"
+  },
+  {
+    "entity": "Artwork",
+    "name": "Watson and the Shark",
+    "relationship": "HAS_BEGIN_DATE",
+    "attribute": "BeginDate",
+    "value": "1738"
+  },
+  {
+    "entity": "Artwork",
+    "name": "Watson and the Shark",
+    "relationship": "HAS_END_DATE",
+    "attribute": "EndDate",
+    "value": "1815"
+  },
+  {
+    "entity": "Artwork",
+    "name": "Watson and the Shark",
+    "relationship": "HAS_GENDER",
+    "attribute": "Gender",
+    "value": "Male"
+  },
+  {
+    "entity": "Artwork",
+    "name": "Watson and the Shark",
+    "relationship": "HAS_DATE",
+    "attribute": "Date",
+    "value": "1778"
+  },
+  {
+    "entity": "Artwork",
+    "name": "Watson and the Shark",
+    "relationship": "HAS_MEDIUM",
+    "attribute": "Medium",
+    "value": "Oil on canvas"
+  },
+  {
+    "entity": "Artwork",
+    "name": "Watson and the Shark",
+    "relationship": "HAS_DIMENSIONS",
+    "attribute": "Dimensions",
+    "value": "182.1 x 229.9 cm (71 11/16 x 90 1/2 in.)"
+  },
+  {
+    "entity": "Artwork",
+    "name": "Watson and the Shark",
+    "relationship": "HAS_CREDIT_LINE",
+    "attribute": "CreditLine",
+    "value": "Fletcher Fund, 1942"
+  },
+  {
+    "entity": "Artwork",
+    "name": "Watson and the Shark",
+    "relationship": "HAS_ACCESSION_NUMBER",
+    "attribute": "AccessionNumber",
+    "value": "42.11"
+  },
+  {
+    "entity": "Artwork",
+    "name": "Watson and the Shark",
+    "relationship": "HAS_CLASSIFICATION",
+    "attribute": "Classification",
+    "value": "Paintings"
+  },
+  {
+    "entity": "Artwork",
+    "name": "Watson and the Shark",
+    "relationship": "HAS_DEPARTMENT",
+    "attribute": "Department",
+    "value": "European Paintings"
+  },
+  {
+    "entity": "Artwork",
+    "name": "Watson and the Shark",
+    "relationship": "HAS_DATE_ACQUIRED",
+    "attribute": "DateAcquired",
+    "value": "1942-01-21"
+  },
+  {
+    "entity": "Artwork",
+    "name": "Watson and the Shark",
+    "relationship": "HAS_CATALOGED",
+    "attribute": "Cataloged",
+    "value": "True"
+  },
+  {
+    "entity": "Artwork",
+    "name": "Watson and the Shark",
+    "relationship": "HAS_OBJECT_ID",
+    "attribute": "ObjectID",
+    "value": "437505"
+  },
+  {
+    "entity": "Artwork",
+    "name": "Watson and the Shark",
+    "relationship": "HAS_URL",
+    "attribute": "URL",
+    "value": "https://www.metmuseum.org/art/collection/search/437505"
+  },
+  {
+    "entity": "Artwork",
+    "name": "Watson and the Shark",
+    "relationship": "HAS_IMAGE_URL",
+    "attribute": "ImageURL",
+    "value": "https://images.metmuseum.org/CRDImages/ep/original/DP107028.jpg"
+  },
+  {
+    "entity": "Artwork",
+    "name": "Watson and the Shark",
+    "relationship": "HAS_ON_VIEW",
+    "attribute": "OnView",
+    "value": "False"
+  },
+  {
+    "entity": "Artwork",
+    "name": "Watson and the Shark",
+    "relationship": "HAS_CIRCUMFERENCE",
+    "attribute": "Circumference (cm)",
+    "value": null
+  },
+  {
+    "entity": "Artwork",
+    "name": "Watson and the Shark",
+    "relationship": "HAS_DEPTH",
+    "attribute": "Depth (cm)",
+    "value": null
+  },
+  {
+    "entity": "Artwork",
+    "name": "Watson and the Shark",
+    "relationship": "HAS_DIAMETER",
+    "attribute": "Diameter (cm)",
+    "value": null
+  },
+  {
+    "entity": "Artwork",
+    "name": "Watson and the Shark",
+    "relationship": "HAS_HEIGHT",
+    "attribute": "Height (cm)",
+    "value": "182.1"
+  },
+  {
+    "entity": "Artwork",
+    "name": "Watson and the Shark",
+    "relationship": "HAS_LENGTH",
+    "attribute": "Length (cm)",
+    "value": null
+  },
+  {
+    "entity": "Artwork",
+    "name": "Watson and the Shark",
+    "relationship": "HAS_WEIGHT",
+    "attribute": "Weight (kg)",
+    "value": null
+  },
+  {
+    "entity": "Artwork",
+    "name": "Watson and the Shark",
+    "relationship": "HAS_WIDTH",
+    "attribute": "Width (cm)",
+    "value": "229.9"
+  },
+  {
+    "entity": "Artwork",
+    "name": "Watson and the Shark",
+    "relationship": "HAS_SEAT_HEIGHT",
+    "attribute": "Seat Height (cm)",
+    "value": null
+  },
+  {
+    "entity": "Artwork",
+    "name": "Watson and the Shark",
+    "relationship": "HAS_DURATION",
+    "attribute": "Duration (sec.)",
+    "value": null
+  },
+  {
+    "entity": "Artwork",
+    "name": "The Death of General Wolfe",
+    "relationship": "HAS_ARTIST",
+    "attribute": "Artist",
+    "value": "Benjamin West"
+  },
+  {
+    "entity": "Artwork",
+    "name": "The Death of General Wolfe",
+    "relationship": "HAS_ARTIST_ID",
+    "attribute": "ConstituentID",
+    "value": "1622"
+  },
+  {
+    "entity": "Artwork",
+    "name": "The Death of General Wolfe",
+    "relationship": "HAS_ARTIST_BIO",
+    "attribute": "ArtistBio",
+    "value": "American, 1738-1820"
+  },
+  {
+    "entity": "Artwork",
+    "name": "The Death of General Wolfe",
+    "relationship": "HAS_NATIONALITY",
+    "attribute": "Nationality",
+    "value": "American"
+  },
+  {
+    "entity": "Artwork",
+    "name": "The Death of General Wolfe",
+    "relationship": "HAS_BEGIN_DATE",
+    "attribute": "BeginDate",
+    "value": "1738"
+  },
+  {
+    "entity": "Artwork",
+    "name": "The Death of General Wolfe",
+    "relationship": "HAS_END_DATE",
+    "attribute": "EndDate",
+    "value": "1820"
+  },
+  {
+    "entity": "Artwork",
+    "name": "The Death of General Wolfe",
+    "relationship": "HAS_GENDER",
+    "attribute": "Gender",
+    "value": "Male"
+  },
+  {
+    "entity": "Artwork",
+    "name": "The Death of General Wolfe",
+    "relationship": "HAS_DATE",
+    "attribute": "Date",
+    "value": "1770"
+  },
+  {
+    "entity": "Artwork",
+    "name": "The Death of General Wolfe",
+    "relationship": "HAS_MEDIUM",
+    "attribute": "Medium",
+    "value": "Oil on canvas"
+  },
+  {
+    "entity": "Artwork",
+    "name": "The Death of General Wolfe",
+    "relationship": "HAS_DIMENSIONS",
+    "attribute": "Dimensions",
+    "value": "151.1 x 213.4 cm (59 1/2 x 84 in.)"
+  },
+  {
+    "entity": "Artwork",
+    "name": "The Death of General Wolfe",
+    "relationship": "HAS_CREDIT_LINE",
+    "attribute": "CreditLine",
+    "value": "Gift of J. Pierpont Morgan, 1906"
+  },
+  {
+    "entity": "Artwork",
+    "name": "The Death of General Wolfe",
+    "relationship": "HAS_ACCESSION_NUMBER",
+    "attribute": "AccessionNumber",
+    "value": "07.12"
+  },
+  {
+    "entity": "Artwork",
+    "name": "The Death of General Wolfe",
+    "relationship": "HAS_CLASSIFICATION",
+    "attribute": "Classification",
+    "value": "Paintings"
+  },
+  {
+    "entity": "Artwork",
+    "name": "The Death of General Wolfe",
+    "relationship": "HAS_DEPARTMENT",
+    "attribute": "Department",
+    "value": "European Paintings"
+  },
+  {
+    "entity": "Artwork",
+    "name": "The Death of General Wolfe",
+    "relationship": "HAS_DATE_ACQUIRED",
+    "attribute": "DateAcquired",
+    "value": "1907-01-10"
+  },
+  {
+    "entity": "Artwork",
+    "name": "The Death of General Wolfe",
+    "relationship": "HAS_CATALOGED",
+    "attribute": "Cataloged",
+    "value": "True"
+  },
+  {
+    "entity": "Artwork",
+    "name": "The Death of General Wolfe",
+    "relationship": "HAS_OBJECT_ID",
+    "attribute": "ObjectID",
+    "value": "437506"
+  },
+  {
+    "entity": "Artwork",
+    "name": "The Death of General Wolfe",
+    "relationship": "HAS_URL",
+    "attribute": "URL",
+    "value": "https://www.metmuseum.org/art/collection/search/437506"
+  },
+  {
+    "entity": "Artwork",
+    "name": "The Death of General Wolfe",
+    "relationship": "HAS_IMAGE_URL",
+    "attribute": "ImageURL",
+    "value": "https://images.metmuseum.org/CRDImages/ep/original/DP107030.jpg"
+  },
+  {
+    "entity": "Artwork",
+    "name": "The Death of General Wolfe",
+    "relationship": "HAS_ON_VIEW",
+    "attribute": "OnView",
+    "value": "False"
+  },
+  {
+    "entity": "Artwork",
+    "name": "The Death of General Wolfe",
+    "relationship": "HAS_CIRCUMFERENCE",
+    "attribute": "Circumference (cm)",
+    "value": null
+  },
+  {
+    "entity": "Artwork",
+    "name": "The Death of General Wolfe",
+    "relationship": "HAS_DEPTH",
+    "attribute": "Depth (cm)",
+    "value": null
+  },
+  {
+    "entity": "Artwork",
+    "name": "The Death of General Wolfe",
+    "relationship": "HAS_DIAMETER",
+    "attribute": "Diameter (cm)",
+    "value": null
+  },
+  {
+    "entity": "Artwork",
+    "name": "The Death of General Wolfe",
+    "relationship": "HAS_HEIGHT",
+    "attribute": "Height (cm)",
+    "value": "151.1"
+  },
+  {
+    "entity": "Artwork",
+    "name": "The Death of General Wolfe",
+    "relationship": "HAS_LENGTH",
+    "attribute": "Length (cm)",
+    "value": null
+  },
+  {
+    "entity": "Artwork",
+    "name": "The Death of General Wolfe",
+    "relationship": "HAS_WEIGHT",
+    "attribute": "Weight (kg)",
+    "value": null
+  },
+  {
+    "entity": "Artwork",
+    "name": "The Death of General Wolfe",
+    "relationship": "HAS_WIDTH",
+    "attribute": "Width (cm)",
+    "value": "213.4"
+  },
+  {
+    "entity": "Artwork",
+    "name": "The Death of General Wolfe",
+    "relationship": "HAS_SEAT_HEIGHT",
+    "attribute": "Seat Height (cm)",
+    "value": null
+  },
+  {
+    "entity": "Artwork",
+    "name": "The Death of General Wolfe",
+    "relationship": "HAS_DURATION",
+    "attribute": "Duration (sec.)",
+    "value": null
+  }
+]
