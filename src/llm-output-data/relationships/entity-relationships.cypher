@@ -1,0 +1,10 @@
+UNWIND $rows AS row MERGE (a:Artist {ConstituentID: row.ConstituentID}) ON CREATE SET a.DisplayName = row.DisplayName, a.name = row.name ON MATCH SET a.DisplayName = row.DisplayName, a.name = row.name
+UNWIND $rows AS row MERGE (n:Nationality {Nationality: row.Nationality}) ON CREATE SET n.Nationality = row.Nationality ON MATCH SET n.Nationality = row.Nationality MERGE (a:Artist {ConstituentID: row.ConstituentID}) MERGE (a)-[:HAS_NATIONALITY]->(n)
+UNWIND $rows AS row MERGE (b:BeginDate {BeginDate: row.BeginDate}) ON CREATE SET b.BeginDate = row.BeginDate ON MATCH SET b.BeginDate = row.BeginDate MERGE (a:Artist {ConstituentID: row.ConstituentID}) MERGE (a)-[:HAS_BEGIN_DATE]->(b)
+UNWIND $rows AS row MERGE (q:WikiQID {WikiQID: row['Wiki QID']}) ON CREATE SET q.WikiQID = row['Wiki QID'] ON MATCH SET q.WikiQID = row['Wiki QID'] MERGE (a:Artist {ConstituentID: row.ConstituentID}) MERGE (a)-[:HAS_WIKI_QID]->(q)
+UNWIND $rows AS row MERGE (u:ULAN {ULAN: row.ULAN}) ON CREATE SET u.ULAN = row.ULAN ON MATCH SET u.ULAN = row.ULAN MERGE (a:Artist {ConstituentID: row.ConstituentID}) MERGE (a)-[:HAS_ULAN]->(u)
+UNWIND $rows AS row MERGE (c:ConstituentID {ConstituentID: row.ConstituentID}) ON CREATE SET c.ConstituentID = row.ConstituentID ON MATCH SET c.ConstituentID = row.ConstituentID MERGE (a:Artist {ConstituentID: row.ConstituentID}) MERGE (a)-[:HAS_CONSTITUENT_ID]->(c)
+UNWIND $rows AS row MERGE (g:Gender {Gender: row.Gender}) ON CREATE SET g.Gender = row.Gender ON MATCH SET g.Gender = row.Gender MERGE (a:Artist {ConstituentID: row.ConstituentID}) MERGE (a)-[:HAS_GENDER]->(g)
+UNWIND $rows AS row MERGE (e:EndDate {EndDate: row.EndDate}) ON CREATE SET e.EndDate = row.EndDate ON MATCH SET e.EndDate = row.EndDate MERGE (a:Artist {ConstituentID: row.ConstituentID}) MERGE (a)-[:HAS_END_DATE]->(e)
+UNWIND $rows AS row MERGE (bio:ArtistBio {ArtistBio: row.ArtistBio}) ON CREATE SET bio.ArtistBio = row.ArtistBio ON MATCH SET bio.ArtistBio = row.ArtistBio MERGE (a:Artist {ConstituentID: row.ConstituentID}) MERGE (a)-[:HAS_ARTIST_BIO]->(bio)
+

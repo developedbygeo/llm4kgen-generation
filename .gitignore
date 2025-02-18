@@ -17,3 +17,7 @@ node_modules
 src/data/new-small/*
 
 Zone.Identifier
+
+llm-data
+
+src/experiments/*

@@ -1,0 +1,261 @@
+[
+    {
+        "entity": "Artist",
+        "name": "John Singer Sargent",
+        "relationship": "HAS_CONSTITUENT_ID",
+        "attribute": "ConstituentID",
+        "value": "100"
+    },
+    {
+        "entity": "Artist",
+        "name": "John Singer Sargent",
+        "relationship": "HAS_BIO",
+        "attribute": "ArtistBio",
+        "value": "American, 1856–1925"
+    },
+    {
+        "entity": "Artist",
+        "name": "John Singer Sargent",
+        "relationship": "HAS_NATIONALITY",
+        "attribute": "Nationality",
+        "value": "American"
+    },
+    {
+        "entity": "Artist",
+        "name": "John Singer Sargent",
+        "relationship": "HAS_GENDER",
+        "attribute": "Gender",
+        "value": "Male"
+    },
+    {
+        "entity": "Artist",
+        "name": "John Singer Sargent",
+        "relationship": "HAS_BEGIN_DATE",
+        "attribute": "BeginDate",
+        "value": "1856"
+    },
+    {
+        "entity": "Artist",
+        "name": "John Singer Sargent",
+        "relationship": "HAS_END_DATE",
+        "attribute": "EndDate",
+        "value": "1925"
+    },
+    {
+        "entity": "Artist",
+        "name": "John Singer Sargent",
+        "relationship": "HAS_WIKI_QID",
+        "attribute": "Wiki QID",
+        "value": "Q163873"
+    },
+    {
+        "entity": "Artist",
+        "name": "John Singer Sargent",
+        "relationship": "HAS_ULAN",
+        "attribute": "ULAN",
+        "value": "500002167"
+    },
+    {
+        "entity": "Artwork",
+        "name": "The Daughters of Edward Darley Boit",
+        "relationship": "HAS_ARTIST",
+        "attribute": "Artist",
+        "value": "John Singer Sargent"
+    },
+    {
+        "entity": "Artwork",
+        "name": "The Daughters of Edward Darley Boit",
+        "relationship": "HAS_CONSTITUENT_ID",
+        "attribute": "ConstituentID",
+        "value": "100"
+    },
+    {
+        "entity": "Artwork",
+        "name": "The Daughters of Edward Darley Boit",
+        "relationship": "HAS_ARTIST_BIO",
+        "attribute": "ArtistBio",
+        "value": "American, 1856–1925"
+    },
+    {
+        "entity": "Artwork",
+        "name": "The Daughters of Edward Darley Boit",
+        "relationship": "HAS_NATIONALITY",
+        "attribute": "Nationality",
+        "value": "American"
+    },
+    {
+        "entity": "Artwork",
+        "name": "The Daughters of Edward Darley Boit",
+        "relationship": "HAS_BEGIN_DATE",
+        "attribute": "BeginDate",
+        "value": "1856"
+    },
+    {
+        "entity": "Artwork",
+        "name": "The Daughters of Edward Darley Boit",
+        "relationship": "HAS_END_DATE",
+        "attribute": "EndDate",
+        "value": "1925"
+    },
+    {
+        "entity": "Artwork",
+        "name": "The Daughters of Edward Darley Boit",
+        "relationship": "HAS_GENDER",
+        "attribute": "Gender",
+        "value": "Male"
+    },
+    {
+        "entity": "Artwork",
+        "name": "The Daughters of Edward Darley Boit",
+        "relationship": "HAS_DATE",
+        "attribute": "Date",
+        "value": "1882"
+    },
+    {
+        "entity": "Artwork",
+        "name": "The Daughters of Edward Darley Boit",
+        "relationship": "HAS_MEDIUM",
+        "attribute": "Medium",
+        "value": "Oil on canvas"
+    },
+    {
+        "entity": "Artwork",
+        "name": "The Daughters of Edward Darley Boit",
+        "relationship": "HAS_DIMENSIONS",
+        "attribute": "Dimensions",
+        "value": "87 1/4 x 87 5/8 in. (221.6 x 222.6 cm)"
+    },
+    {
+        "entity": "Artwork",
+        "name": "The Daughters of Edward Darley Boit",
+        "relationship": "HAS_CREDIT_LINE",
+        "attribute": "CreditLine",
+        "value": "Gift of the daughters of Edward Darley Boit in memory of their father"
+    },
+    {
+        "entity": "Artwork",
+        "name": "The Daughters of Edward Darley Boit",
+        "relationship": "HAS_ACCESSION_NUMBER",
+        "attribute": "AccessionNumber",
+        "value": "1919.124"
+    },
+    {
+        "entity": "Artwork",
+        "name": "The Daughters of Edward Darley Boit",
+        "relationship": "HAS_CLASSIFICATION",
+        "attribute": "Classification",
+        "value": "Paintings"
+    },
+    {
+        "entity": "Artwork",
+        "name": "The Daughters of Edward Darley Boit",
+        "relationship": "HAS_DEPARTMENT",
+        "attribute": "Department",
+        "value": "European Paintings"
+    },
+    {
+        "entity": "Artwork",
+        "name": "The Daughters of Edward Darley Boit",
+        "relationship": "HAS_DATE_ACQUIRED",
+        "attribute": "DateAcquired",
+        "value": "1919-01-01"
+    },
+    {
+        "entity": "Artwork",
+        "name": "The Daughters of Edward Darley Boit",
+        "relationship": "HAS_CATALOGED",
+        "attribute": "Cataloged",
+        "value": "Y"
+    },
+    {
+        "entity": "Artwork",
+        "name": "The Daughters of Edward Darley Boit",
+        "relationship": "HAS_OBJECT_ID",
+        "attribute": "ObjectID",
+        "value": "31102"
+    },
+    {
+        "entity": "Artwork",
+        "name": "The Daughters of Edward Darley Boit",
+        "relationship": "HAS_URL",
+        "attribute": "URL",
+        "value": "http://www.mfa.org/collections/object/the-daughters-of-edward-darley-boit-31102"
+    },
+    {
+        "entity": "Artwork",
+        "name": "The Daughters of Edward Darley Boit",
+        "relationship": "HAS_IMAGE_URL",
+        "attribute": "ImageURL",
+        "value": "http://www.mfa.org/var/ezflow_site/storage/images/media/images/1919.124/121280-1-eng-US/1919.124_full.jpg"
+    },
+    {
+        "entity": "Artwork",
+        "name": "The Daughters of Edward Darley Boit",
+        "relationship": "IS_ON_VIEW",
+        "attribute": "OnView",
+        "value": "Y"
+    },
+    {
+        "entity": "Artwork",
+        "name": "The Daughters of Edward Darley Boit",
+        "relationship": "HAS_CIRCUMFERENCE",
+        "attribute": "Circumference (cm)",
+        "value": null
+    },
+    {
+        "entity": "Artwork",
+        "name": "The Daughters of Edward Darley Boit",
+        "relationship": "HAS_DEPTH",
+        "attribute": "Depth (cm)",
+        "value": null
+    },
+    {
+        "entity": "Artwork",
+        "name": "The Daughters of Edward Darley Boit",
+        "relationship": "HAS_DIAMETER",
+        "attribute": "Diameter (cm)",
+        "value": null
+    },
+    {
+        "entity": "Artwork",
+        "name": "The Daughters of Edward Darley Boit",
+        "relationship": "HAS_HEIGHT",
+        "attribute": "Height (cm)",
+        "value": "221.6"
+    },
+    {
+        "entity": "Artwork",
+        "name": "The Daughters of Edward Darley Boit",
+        "relationship": "HAS_LENGTH",
+        "attribute": "Length (cm)",
+        "value": null
+    },
+    {
+        "entity": "Artwork",
+        "name": "The Daughters of Edward Darley Boit",
+        "relationship": "HAS_WEIGHT",
+        "attribute": "Weight (kg)",
+        "value": null
+    },
+    {
+        "entity": "Artwork",
+        "name": "The Daughters of Edward Darley Boit",
+        "relationship": "HAS_WIDTH",
+        "attribute": "Width (cm)",
+        "value": "222.6"
+    },
+    {
+        "entity": "Artwork",
+        "name": "The Daughters of Edward Darley Boit",
+        "relationship": "HAS_SEAT_HEIGHT",
+        "attribute": "Seat Height (cm)",
+        "value": null
+    },
+    {
+        "entity": "Artwork",
+        "name": "The Daughters of Edward Darley Boit",
+        "relationship": "HAS_DURATION",
+        "attribute": "Duration (sec.)",
+        "value": null
+    }
+]

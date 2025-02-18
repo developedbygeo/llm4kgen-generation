@@ -1,3 +1,5 @@
+import chalk from 'chalk';
+
 export const logBigMessage = (message: string): void => {
     console.log(
         '--------------------------------------------------------------------\n' +
@@ -5,3 +7,6 @@ export const logBigMessage = (message: string): void => {
             '--------------------------------------------------------------------'
     );
 };
+
+export const logRunningScript = (sript: string) =>
+    console.log(chalk.green(`Running script: ${sript}`));
