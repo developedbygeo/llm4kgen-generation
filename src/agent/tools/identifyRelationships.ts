@@ -154,6 +154,7 @@ const constructPromptForRelationshipIdentificationWithOntologyRAG = (
       }
       // Add more relationships here as identified.
     ]
-    Return only valid JSON in the response.
-    `;
+
+    
+       Provide only the JSON response in the specified format, without additional text or context.`;
 };
